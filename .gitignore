@@ -1,8 +1,10 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 
 # Build output
 dist/
+dist-ssr/
 build/
 
 # Local env
@@ -16,14 +18,26 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
-# Editor
-.DS_Store
-.idea/
-.vscode/
+# Cache
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.vite/
+.turbo/
+.parcel-cache/
+.nyc_output/
 
 # Coverage
 coverage/
+
+# Editor and OS
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/
 
 # Private project docs
 docs/
