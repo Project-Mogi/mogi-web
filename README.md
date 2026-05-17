@@ -25,6 +25,38 @@
 - Zustand
 - Axios
 - React Query
+- pnpm
+
+## 시작하기
+
+### 요구사항
+
+- Node.js 22 이상
+- pnpm 10 이상
+
+### 설치
+
+```bash
+pnpm install
+```
+
+### 개발 서버 실행
+
+```bash
+pnpm dev
+```
+
+### 빌드
+
+```bash
+pnpm build
+```
+
+### 린트
+
+```bash
+pnpm lint
+```
 
 ## 디자인 방향
 
