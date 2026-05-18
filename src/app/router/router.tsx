@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { SignInPage } from '@/pages/auth/sign-in';
 import { SignUpPage } from '@/pages/auth/sign-up';
-import { ConductCreatePage } from '@/pages/conduct-create';
+import { ConductPage } from '@/pages/conduct';
 import { DashboardPage } from '@/pages/dashboard';
 import { HistoriesPage } from '@/pages/histories';
 import { NotFoundPage } from '@/pages/not-found';
@@ -36,8 +36,8 @@ export const router = createBrowserRouter([
     element: <StudentDetailPage />,
   },
   {
-    path: '/conduct/new',
-    element: <ConductCreatePage />,
+    path: '/conduct',
+    element: <ConductPage />,
   },
   {
     path: '/histories',
