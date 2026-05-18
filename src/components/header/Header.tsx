@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import textLogo from '@/assets/logos/TextLogo.png';
@@ -12,6 +13,7 @@ type HeaderProps = {
 
 export function Header({ variant = 'auth' }: HeaderProps) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const isAppHeader = variant === 'app';
 
   const handleLogout = async () => {
@@ -19,6 +21,7 @@ export function Header({ variant = 'auth' }: HeaderProps) {
       await logout();
     } finally {
       clearAuthTokens();
+      queryClient.clear();
       navigate('/login', { replace: true });
     }
   };
