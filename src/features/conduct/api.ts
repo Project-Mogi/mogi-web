@@ -39,6 +39,18 @@ export interface ConductListFilters {
   classNumber?: number;
 }
 
+export interface CreateConductRequest {
+  userId: number;
+  conductCategory: ConductCategory;
+  rewardCategory: null;
+  penaltyCategory: null;
+  score: number;
+}
+
+export interface CreateConductResponseData {
+  conductHistoryId: number;
+}
+
 export async function getConductInfos(filters: ConductListFilters) {
   const response = await apiClient.get<ApiResponse<ConductListResponseData>>(getConductListPath(filters));
 
@@ -53,6 +65,16 @@ export async function getConductDetail(userId: number, sort: SortDirection = 'DE
   const response = await apiClient.get<ApiResponse<ConductDetail>>(`/conduct/id/${userId}`, {
     params: { sort },
   });
+
+  if (!response.data.success || !response.data.data) {
+    throw response.data;
+  }
+
+  return response.data.data;
+}
+
+export async function createConduct(payload: CreateConductRequest) {
+  const response = await apiClient.post<ApiResponse<CreateConductResponseData>>('/conduct', payload);
 
   if (!response.data.success || !response.data.data) {
     throw response.data;
