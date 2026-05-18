@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 export interface ApiResponse<T> {
   data: T | null;
   success: boolean;
@@ -26,6 +28,10 @@ export type ApiErrorCode =
 export function getApiErrorMessage(error: unknown, fallbackMessage = '요청에 실패했습니다.') {
   if (isApiErrorResponse(error)) {
     return error.error?.message ?? fallbackMessage;
+  }
+
+  if (isAxiosError<ApiResponse<unknown>>(error) && isApiErrorResponse(error.response?.data)) {
+    return error.response.data.error?.message ?? fallbackMessage;
   }
 
   return fallbackMessage;
