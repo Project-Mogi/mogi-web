@@ -33,11 +33,11 @@ export function useSignUpForm() {
 
   const getAccountStepError = () => {
     if (!isAccountStepFilled) {
-      return '아이디, 이메일, 비밀번호를 모두 입력해 주세요.';
+      return '아이디, 이메일, 비밀번호를 모두 입력해 주세요';
     }
 
     if (!isEmailFormatValid) {
-      return '이메일 형식을 확인해 주세요.';
+      return '이메일 형식을 확인해 주세요';
     }
 
     return '';
