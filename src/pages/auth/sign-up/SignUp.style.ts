@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
+import * as token from '@/shared/styles/token';
+
 export const Page = styled.main`
   min-height: 100dvh;
-  padding: ${({ theme }) => theme.spacing.xl};
-  background: ${({ theme }) => theme.colors.background};
+  padding: ${token.spacing.xl};
+  background: ${token.colors.blueTint};
 `;
 
 export const Title = styled.h1`
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ theme }) => theme.typography.title.fontSize};
-  font-weight: ${({ theme }) => theme.typography.title.fontWeight};
-  line-height: ${({ theme }) => theme.typography.title.lineHeight};
+  color: ${token.colors.navy};
+  ${token.typography('title')}
 `;
