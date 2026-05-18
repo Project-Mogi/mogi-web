@@ -16,7 +16,7 @@ const actionLinkVariant = {
   `,
 };
 
-export const Header = styled.header`
+export const Header = styled.header<{ $variant: 'auth' | 'app' }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -29,6 +29,12 @@ export const Header = styled.header`
   box-sizing: border-box;
   padding: 18px 80px;
   background: ${token.colors.white};
+  ${({ $variant }) =>
+    $variant === 'app' &&
+    css`
+      border-bottom: 1px solid ${token.colors.blueLine};
+      box-shadow: 0 4px 18px rgba(25, 33, 58, 0.04);
+    `}
 
   @media (max-width: 768px) {
     height: 64px;
@@ -75,6 +81,34 @@ export const ActionLink = styled(Link)<{ $variant: 'outline' | 'primary' }>`
   justify-content: center;
   border-radius: ${token.radius.sm};
   ${({ $variant }) => actionLinkVariant[$variant]}
+  ${token.typography('caption')}
+  font-weight: 600;
+  text-decoration: none;
+`;
+
+export const AppActions = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: ${token.spacing.md};
+`;
+
+export const UserName = styled.span`
+  color: ${token.colors.navy};
+  ${token.typography('caption')}
+  font-weight: 700;
+`;
+
+export const LogoutLink = styled(Link)`
+  display: inline-flex;
+  min-width: 84px;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  background: ${token.colors.white};
+  color: ${token.colors.navyMuted};
+  cursor: pointer;
   ${token.typography('caption')}
   font-weight: 600;
   text-decoration: none;
