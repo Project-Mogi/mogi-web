@@ -17,10 +17,16 @@ const actionLinkVariant = {
 };
 
 export const Header = styled.header`
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
   display: flex;
   height: 72px;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
   padding: 18px 80px;
   background: ${token.colors.white};
 

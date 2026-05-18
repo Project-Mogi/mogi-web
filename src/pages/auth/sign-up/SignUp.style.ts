@@ -29,11 +29,10 @@ export const Page = styled.main`
 
 export const Content = styled.section`
   ${token.flexCenter}
-  min-height: calc(100dvh - 72px);
+  min-height: 100dvh;
   padding: ${token.spacing.xl};
 
   @media (max-width: 768px) {
-    min-height: calc(100dvh - 64px);
     padding: ${token.spacing.lg};
   }
 `;
