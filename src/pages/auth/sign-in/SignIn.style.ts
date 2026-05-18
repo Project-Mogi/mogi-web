@@ -85,6 +85,14 @@ export const Input = styled.input`
     border-color: ${token.colors.blue};
     box-shadow: 0 0 0 3px rgba(91, 157, 255, 0.14);
   }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px ${token.colors.white} inset;
+    -webkit-text-fill-color: ${token.colors.navy};
+    caret-color: ${token.colors.navy};
+  }
 `;
 
 export const SubmitButton = styled.button`
@@ -114,7 +122,7 @@ export const GuideText = styled.p`
 
   a {
     color: ${token.colors.blue};
-    font-weight: 800;
+    font-weight: 500;
     text-decoration: none;
   }
 `;
