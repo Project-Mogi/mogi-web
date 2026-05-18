@@ -24,28 +24,41 @@ export function SignUpPage() {
     handleGenderChange,
     createPayload,
   } = useSignUpForm();
-  const [toast, setToast] = useState<{ id: number; message: string } | null>(null);
+  const [toast, setToast] = useState<{
+    id: number;
+    message: string;
+    isClosing: boolean;
+  } | null>(null);
+  const toastId = toast?.id;
 
   const showToast = (message: string) => {
     setToast({
       id: Date.now(),
       message,
+      isClosing: false,
     });
   };
 
   useEffect(() => {
-    if (!toast) {
+    if (!toastId) {
       return;
     }
 
-    const timerId = window.setTimeout(() => {
-      setToast(null);
+    const closeTimerId = window.setTimeout(() => {
+      setToast((currentToast) =>
+        currentToast?.id === toastId ? { ...currentToast, isClosing: true } : currentToast,
+      );
+    }, 2000);
+
+    const removeTimerId = window.setTimeout(() => {
+      setToast((currentToast) => (currentToast?.id === toastId ? null : currentToast));
     }, 2200);
 
     return () => {
-      window.clearTimeout(timerId);
+      window.clearTimeout(closeTimerId);
+      window.clearTimeout(removeTimerId);
     };
-  }, [toast]);
+  }, [toastId]);
 
   const signUpMutation = useMutation({
     mutationFn: signUp,
@@ -53,7 +66,7 @@ export function SignUpPage() {
       navigate('/login', { replace: true });
     },
     onError: (error) => {
-      showToast(getApiErrorMessage(error, '회원가입에 실패했습니다.'));
+      showToast(getApiErrorMessage(error, '회원가입에 실패했습니다'));
     },
   });
 
@@ -87,7 +100,7 @@ export function SignUpPage() {
 
   return (
     <S.Page>
-      <Toast key={toast?.id} message={toast?.message ?? ''} />
+      <Toast key={toast?.id} message={toast?.message ?? ''} isClosing={toast?.isClosing} />
       <Header />
 
       <S.Content>
