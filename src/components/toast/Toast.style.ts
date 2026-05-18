@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import * as token from '@/shared/styles/token';
 
@@ -14,7 +14,19 @@ const toastDrop = keyframes`
   }
 `;
 
-export const Toast = styled.div`
+const toastRise = keyframes`
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, -14px);
+  }
+`;
+
+export const Toast = styled.div<{ $isClosing: boolean }>`
   position: fixed;
   top: 24px;
   left: 50%;
@@ -32,7 +44,14 @@ export const Toast = styled.div`
   color: ${token.colors.navy};
   pointer-events: none;
   transform: translateX(-50%);
-  animation: ${toastDrop} 180ms ease-out both;
+  animation: ${({ $isClosing }) =>
+    $isClosing
+      ? css`
+          ${toastRise} 180ms ease-in both
+        `
+      : css`
+          ${toastDrop} 180ms ease-out both
+        `};
   ${token.typography('caption')}
   font-weight: 500;
 `;
