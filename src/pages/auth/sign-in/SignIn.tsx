@@ -16,6 +16,7 @@ export function SignInPage() {
     isClosing: boolean;
   } | null>(null);
   const toastId = toast?.id;
+  const isDisabled = !username.trim() || !password.trim();
 
   const showToast = (message: string) => {
     setToast({
@@ -89,7 +90,7 @@ export function SignInPage() {
               />
             </S.Field>
 
-            <S.SubmitButton type="submit">
+            <S.SubmitButton type="submit" disabled={isDisabled}>
               로그인
             </S.SubmitButton>
           </S.Form>

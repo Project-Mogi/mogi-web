@@ -106,8 +106,8 @@ export function SignUpPage() {
       <S.Content>
         <S.Panel>
           <S.Logo src={logo} alt="" aria-hidden="true" />
-          <S.Title>회원가입</S.Title>
-          <S.Description>모두의기숙사 계정을 생성합니다</S.Description>
+          <S.Title>계정을 생성하세요</S.Title>
+          <S.Description>계속 진행하려면 추가 정보를 설정하세요</S.Description>
 
           <S.Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             {step === 'account' ? (
