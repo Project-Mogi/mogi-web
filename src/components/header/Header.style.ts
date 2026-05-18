@@ -98,7 +98,7 @@ export const UserName = styled.span`
   font-weight: 700;
 `;
 
-export const LogoutLink = styled(Link)`
+export const LogoutButton = styled.button`
   display: inline-flex;
   min-width: 84px;
   min-height: 38px;
@@ -111,5 +111,4 @@ export const LogoutLink = styled(Link)`
   cursor: pointer;
   ${token.typography('caption')}
   font-weight: 600;
-  text-decoration: none;
 `;

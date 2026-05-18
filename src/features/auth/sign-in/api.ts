@@ -27,3 +27,13 @@ export async function signIn(payload: SignInRequest) {
 
   return response.data.data;
 }
+
+export async function logout() {
+  const response = await apiClient.post<ApiResponse<null>>('/auth/logout');
+
+  if (!response.data.success) {
+    throw response.data;
+  }
+
+  return response.data;
+}
