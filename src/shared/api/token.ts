@@ -1,5 +1,5 @@
-const ACCESS_TOKEN_KEY = 'mogi.accessToken';
-const REFRESH_TOKEN_KEY = 'mogi.refreshToken';
+const ACCESS_TOKEN_KEY = 'accessToken';
+const REFRESH_TOKEN_KEY = 'refreshToken';
 
 export interface AuthTokens {
   accessToken: string;
