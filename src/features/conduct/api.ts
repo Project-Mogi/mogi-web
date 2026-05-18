@@ -74,5 +74,5 @@ function getConductListPath({ gender, grade, classNumber }: ConductListFilters) 
     return `/conduct/grade/${grade}`;
   }
 
-  return '/conduct/';
+  return '/conduct';
 }
