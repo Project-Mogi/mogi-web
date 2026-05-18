@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { type ComponentPropsWithoutRef } from 'react';
+import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
 import { Header } from '@/components/header';
+import { Toast } from '@/components/toast';
 import { signUp } from '@/features/auth/sign-up/api';
 import { getApiErrorMessage } from '@/shared/api/types';
 
@@ -16,17 +17,43 @@ export function SignUpPage() {
     form,
     step,
     isValid,
-    isAccountStepValid,
+    isAccountStepFilled,
     goToNextStep,
+    getAccountStepError,
     handleInputChange,
     handleGenderChange,
     createPayload,
   } = useSignUpForm();
+  const [toast, setToast] = useState<{ id: number; message: string } | null>(null);
+
+  const showToast = (message: string) => {
+    setToast({
+      id: Date.now(),
+      message,
+    });
+  };
+
+  useEffect(() => {
+    if (!toast) {
+      return;
+    }
+
+    const timerId = window.setTimeout(() => {
+      setToast(null);
+    }, 2200);
+
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [toast]);
 
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: () => {
       navigate('/login', { replace: true });
+    },
+    onError: (error) => {
+      showToast(getApiErrorMessage(error, '회원가입에 실패했습니다.'));
     },
   });
 
@@ -36,6 +63,13 @@ export function SignUpPage() {
     event.preventDefault();
 
     if (step === 'account') {
+      const accountStepError = getAccountStepError();
+
+      if (accountStepError) {
+        showToast(accountStepError);
+        return;
+      }
+
       goToNextStep();
       return;
     }
@@ -51,12 +85,9 @@ export function SignUpPage() {
     }
   };
 
-  const errorMessage = signUpMutation.error
-    ? getApiErrorMessage(signUpMutation.error, '회원가입에 실패했습니다.')
-    : '';
-
   return (
     <S.Page>
+      <Toast key={toast?.id} message={toast?.message ?? ''} />
       <Header />
 
       <S.Content>
@@ -65,7 +96,7 @@ export function SignUpPage() {
           <S.Title>회원가입</S.Title>
           <S.Description>모두의기숙사 계정을 생성합니다</S.Description>
 
-          <S.Form autoComplete="off" onSubmit={handleSubmit}>
+          <S.Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             {step === 'account' ? (
               <>
                 <S.Field>
@@ -188,11 +219,9 @@ export function SignUpPage() {
               </>
             )}
 
-            {errorMessage ? <S.ErrorMessage role="alert">{errorMessage}</S.ErrorMessage> : null}
-
             <S.SubmitButton
               type="submit"
-              disabled={step === 'account' ? !isAccountStepValid : isSubmitDisabled}
+              disabled={step === 'account' ? !isAccountStepFilled : isSubmitDisabled}
             >
               {step === 'account' ? '계속' : signUpMutation.isPending ? '가입 중' : '회원가입'}
             </S.SubmitButton>

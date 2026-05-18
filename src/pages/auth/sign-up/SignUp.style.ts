@@ -129,12 +129,6 @@ export const GenderButton = styled.button<{ $variant: GenderButtonVariant }>`
   font-weight: 700;
 `;
 
-export const ErrorMessage = styled.p`
-  margin: 0;
-  color: ${token.colors.red};
-  ${token.typography('caption')}
-`;
-
 export const SubmitButton = styled.button`
   min-height: 48px;
   border: 0;
