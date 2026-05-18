@@ -103,7 +103,7 @@ export const SubmitButton = styled.button`
   color: ${token.colors.white};
   cursor: pointer;
   ${token.typography('body')}
-  font-weight: 800;
+  font-weight: 600;
 
   &:hover:not(:disabled) {
     background: ${token.colors.blueHover};
