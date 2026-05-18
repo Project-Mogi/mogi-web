@@ -146,7 +146,7 @@ export function ConductPage() {
         </S.FilterPanel>
 
         {isConductError && (
-          <S.StateMessage>{getApiErrorMessage(conductError, '상벌점 정보를 불러오지 못했습니다.')}</S.StateMessage>
+          <S.StateMessage>{getApiErrorMessage(conductError, '상벌점 정보를 불러오지 못했습니다')}</S.StateMessage>
         )}
         {!isConductError && (
           <S.TableWrap>
