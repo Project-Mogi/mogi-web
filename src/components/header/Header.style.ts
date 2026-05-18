@@ -63,8 +63,8 @@ export const Actions = styled.nav`
 
 export const ActionLink = styled(Link)<{ $variant: 'outline' | 'primary' }>`
   display: inline-flex;
-  min-width: ${({ $variant }) => ($variant === 'primary' ? '90px' : '78px')};
-  min-height: 36px;
+  width: 84px;
+  min-height: 38px;
   align-items: center;
   justify-content: center;
   border-radius: ${token.radius.sm};
