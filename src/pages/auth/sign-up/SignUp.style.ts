@@ -93,7 +93,7 @@ export const Input = styled.input`
   background: ${token.colors.white};
   color: ${token.colors.navy};
   outline: none;
-  ${token.typography('body')}
+  ${token.typography('caption')}
 
   &::placeholder {
     color: ${token.colors.gray};
