@@ -1,4 +1,5 @@
 import textLogo from '@/assets/logos/TextLogo.png';
+import { clearAuthTokens } from '@/shared/api/token';
 
 import * as S from './Header.style';
 
@@ -18,7 +19,9 @@ export function Header({ variant = 'auth' }: HeaderProps) {
       {isAppHeader ? (
         <S.AppActions aria-label="사용자 메뉴">
           <S.UserName>관리자</S.UserName>
-          <S.LogoutLink to="/login">로그아웃</S.LogoutLink>
+          <S.LogoutLink to="/login" onClick={clearAuthTokens}>
+            로그아웃
+          </S.LogoutLink>
         </S.AppActions>
       ) : (
         <S.Actions aria-label="인증 메뉴">
