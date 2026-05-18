@@ -1,13 +1,18 @@
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { Link, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
 import { Header } from '@/components/header';
 import { Toast } from '@/components/toast';
+import { signIn } from '@/features/auth/sign-in/api';
+import { getApiErrorMessage } from '@/shared/api/types';
+import { setAuthTokens } from '@/shared/api/token';
 
 import * as S from './SignIn.style';
 
 export function SignInPage() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [toast, setToast] = useState<{
@@ -16,7 +21,19 @@ export function SignInPage() {
     isClosing: boolean;
   } | null>(null);
   const toastId = toast?.id;
-  const isDisabled = !username.trim() || !password.trim();
+
+  const signInMutation = useMutation({
+    mutationFn: signIn,
+    onSuccess: ({ accessToken, refreshToken }) => {
+      setAuthTokens({ accessToken, refreshToken });
+      navigate('/conduct');
+    },
+    onError: (error) => {
+      showToast(getApiErrorMessage(error, '아이디 또는 비밀번호가 올바르지 않습니다'));
+    },
+  });
+
+  const isDisabled = !username.trim() || !password.trim() || signInMutation.isPending;
 
   const showToast = (message: string) => {
     setToast({
@@ -52,7 +69,13 @@ export function SignInPage() {
 
     if (!username.trim() || !password.trim()) {
       showToast('아이디와 비밀번호를 입력해 주세요');
+      return;
     }
+
+    signInMutation.mutate({
+      username: username.trim(),
+      password,
+    });
   };
 
   return (
@@ -91,7 +114,7 @@ export function SignInPage() {
             </S.Field>
 
             <S.SubmitButton type="submit" disabled={isDisabled}>
-              로그인
+              {signInMutation.isPending ? '로그인 중' : '로그인'}
             </S.SubmitButton>
           </S.Form>
 

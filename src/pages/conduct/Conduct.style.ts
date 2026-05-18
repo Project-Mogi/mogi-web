@@ -359,6 +359,25 @@ export const Table = styled.table`
   }
 `;
 
+export const StateMessage = styled.p`
+  margin: 0;
+  padding: ${token.spacing.xl};
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  background: ${token.colors.white};
+  color: ${token.colors.navyMuted};
+  text-align: center;
+  ${token.typography('body')}
+`;
+
+export const EmptyTableText = styled.p`
+  margin: 0;
+  padding: ${token.spacing.xl};
+  color: ${token.colors.navyMuted};
+  text-align: center;
+  ${token.typography('caption')}
+`;
+
 export const TableRow = styled.tr<{ $isSelected?: boolean }>`
   ${({ $isSelected }) =>
     $isSelected &&
@@ -495,4 +514,32 @@ export const EmptyText = styled.p`
   margin: 0;
   color: ${token.colors.navyMuted};
   ${token.typography('body')}
+`;
+
+export const ModalStateText = styled.p`
+  margin: ${token.spacing.md} 0 0;
+  color: ${token.colors.navyMuted};
+  ${token.typography('caption')}
+`;
+
+export const HistoryList = styled.div`
+  ${token.flexColumn}
+  gap: ${token.spacing.sm};
+  margin-top: ${token.spacing.lg};
+`;
+
+export const HistoryItem = styled.div`
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  color: ${token.colors.navy};
+  ${token.typography('caption')}
+
+  strong {
+    color: ${token.colors.blue};
+  }
 `;
