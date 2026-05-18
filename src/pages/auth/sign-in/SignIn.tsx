@@ -1,6 +1,6 @@
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
 import { Header } from '@/components/header';
@@ -13,6 +13,7 @@ import * as S from './SignIn.style';
 
 export function SignInPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [toast, setToast] = useState<{
@@ -26,7 +27,7 @@ export function SignInPage() {
     mutationFn: signIn,
     onSuccess: ({ accessToken, refreshToken }) => {
       setAuthTokens({ accessToken, refreshToken });
-      navigate('/conduct');
+      navigate(getRedirectPath(location.state), { replace: true });
     },
     onError: (error) => {
       showToast(getApiErrorMessage(error, '아이디 또는 비밀번호가 올바르지 않습니다'));
@@ -125,4 +126,18 @@ export function SignInPage() {
       </S.Content>
     </S.Page>
   );
+}
+
+function getRedirectPath(state: unknown) {
+  if (!state || typeof state !== 'object' || !('from' in state)) {
+    return '/conduct';
+  }
+
+  const from = state.from;
+
+  if (!from || typeof from !== 'object' || !('pathname' in from)) {
+    return '/conduct';
+  }
+
+  return typeof from.pathname === 'string' ? from.pathname : '/conduct';
 }

@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { SignInPage } from '@/pages/auth/sign-in';
@@ -10,10 +11,12 @@ import { StatisticsPage } from '@/pages/statistics';
 import { StudentDetailPage } from '@/pages/student-detail';
 import { StudentsPage } from '@/pages/students';
 
+import { ProtectedRoute } from './ProtectedRoute';
+
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/dashboard" replace />,
+    element: withAuth(<Navigate to="/conduct" replace />),
   },
   {
     path: '/login',
@@ -25,30 +28,34 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardPage />,
+    element: withAuth(<DashboardPage />),
   },
   {
     path: '/students',
-    element: <StudentsPage />,
+    element: withAuth(<StudentsPage />),
   },
   {
     path: '/students/:studentId',
-    element: <StudentDetailPage />,
+    element: withAuth(<StudentDetailPage />),
   },
   {
     path: '/conduct',
-    element: <ConductPage />,
+    element: withAuth(<ConductPage />),
   },
   {
     path: '/histories',
-    element: <HistoriesPage />,
+    element: withAuth(<HistoriesPage />),
   },
   {
     path: '/statistics',
-    element: <StatisticsPage />,
+    element: withAuth(<StatisticsPage />),
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    element: withAuth(<NotFoundPage />),
   },
 ]);
+
+function withAuth(element: ReactNode) {
+  return <ProtectedRoute>{element}</ProtectedRoute>;
+}
