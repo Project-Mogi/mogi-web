@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
@@ -14,6 +14,7 @@ import * as S from './SignIn.style';
 export function SignInPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [toast, setToast] = useState<{
@@ -27,6 +28,7 @@ export function SignInPage() {
     mutationFn: signIn,
     onSuccess: ({ accessToken, refreshToken }) => {
       setAuthTokens({ accessToken, refreshToken });
+      queryClient.removeQueries({ queryKey: ['conduct'] });
       navigate(getRedirectPath(location.state), { replace: true });
     },
     onError: (error) => {
