@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react';
+import { type ComponentPropsWithoutRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
@@ -12,7 +12,7 @@ export function SignInPage() {
 
   const isDisabled = !username.trim() || !password.trim();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit: NonNullable<ComponentPropsWithoutRef<'form'>['onSubmit']> = (event) => {
     event.preventDefault();
   };
 

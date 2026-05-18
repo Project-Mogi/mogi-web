@@ -7,8 +7,8 @@ import { Header } from '@/components/header';
 import { signUp } from '@/features/auth/sign-up/api';
 import { getApiErrorMessage } from '@/shared/api/types';
 
+import { useSignUpForm } from './hooks';
 import * as S from './SignUp.style';
-import { useSignUpForm } from './useSignUpForm';
 
 export function SignUpPage() {
   const navigate = useNavigate();
@@ -65,27 +65,29 @@ export function SignUpPage() {
           <S.Title>회원가입</S.Title>
           <S.Description>모두의기숙사 계정을 생성합니다</S.Description>
 
-          <S.Form onSubmit={handleSubmit}>
+          <S.Form autoComplete="off" onSubmit={handleSubmit}>
             {step === 'account' ? (
               <>
                 <S.Field>
-                  <S.Label htmlFor="username">아이디</S.Label>
+                  <S.Label htmlFor="signup-user-id">아이디</S.Label>
                   <S.Input
-                    id="username"
-                    name="username"
+                    id="signup-user-id"
+                    name="signup-user-id"
+                    data-field="username"
                     required
                     value={form.username}
                     placeholder="아이디를 입력하세요"
-                    autoComplete="off"
+                    autoComplete="new-password"
                     onChange={handleInputChange}
                   />
                 </S.Field>
 
                 <S.Field>
-                  <S.Label htmlFor="email">이메일</S.Label>
+                  <S.Label htmlFor="signup-email">이메일</S.Label>
                   <S.Input
-                    id="email"
+                    id="signup-email"
                     name="email"
+                    data-field="email"
                     type="email"
                     required
                     value={form.email}
@@ -96,15 +98,16 @@ export function SignUpPage() {
                 </S.Field>
 
                 <S.Field>
-                  <S.Label htmlFor="password">비밀번호</S.Label>
+                  <S.Label htmlFor="signup-passcode">비밀번호</S.Label>
                   <S.Input
-                    id="password"
-                    name="password"
+                    id="signup-passcode"
+                    name="signup-passcode"
+                    data-field="password"
                     type="password"
                     required
                     value={form.password}
                     placeholder="비밀번호를 입력하세요"
-                    autoComplete="off"
+                    autoComplete="new-password"
                     onChange={handleInputChange}
                   />
                 </S.Field>
@@ -112,10 +115,11 @@ export function SignUpPage() {
             ) : (
               <>
                 <S.Field>
-                  <S.Label htmlFor="name">이름</S.Label>
+                  <S.Label htmlFor="signup-name">이름</S.Label>
                   <S.Input
-                    id="name"
-                    name="name"
+                    id="signup-name"
+                    name="signup-name"
+                    data-field="name"
                     required
                     value={form.name}
                     placeholder="이름을 입력하세요"
@@ -125,10 +129,11 @@ export function SignUpPage() {
                 </S.Field>
 
                 <S.Field>
-                  <S.Label htmlFor="studentNumber">학번</S.Label>
+                  <S.Label htmlFor="signup-student-number">학번</S.Label>
                   <S.Input
-                    id="studentNumber"
-                    name="studentNumber"
+                    id="signup-student-number"
+                    name="signup-student-number"
+                    data-field="studentNumber"
                     type="number"
                     min="1"
                     required
@@ -165,10 +170,11 @@ export function SignUpPage() {
                 </S.Field>
 
                 <S.Field>
-                  <S.Label htmlFor="roomNumber">방 번호</S.Label>
+                  <S.Label htmlFor="signup-room-number">방 번호</S.Label>
                   <S.Input
-                    id="roomNumber"
-                    name="roomNumber"
+                    id="signup-room-number"
+                    name="signup-room-number"
+                    data-field="roomNumber"
                     type="number"
                     min="1"
                     required
