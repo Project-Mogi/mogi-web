@@ -10,8 +10,8 @@ export const GlobalStyle = createGlobalStyle`
   html {
     font-family:
       Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.blueTint};
+    color: ${({ theme }) => theme.colors.navy};
   }
 
   body {
