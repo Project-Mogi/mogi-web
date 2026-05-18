@@ -11,6 +11,8 @@ export const theme = {
     navyMuted: '#58637A',
     gray: '#8C96AA',
     red: '#FF5A5A',
+    pink: '#F472B6',
+    pinkTint: '#FDF2F8',
     green: '#00A661',
     yellow: '#FFB020',
   },

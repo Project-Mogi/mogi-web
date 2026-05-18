@@ -19,6 +19,8 @@ export const colors = {
   navyMuted: themeValue('colors', 'navyMuted'),
   gray: themeValue('colors', 'gray'),
   red: themeValue('colors', 'red'),
+  pink: themeValue('colors', 'pink'),
+  pinkTint: themeValue('colors', 'pinkTint'),
   green: themeValue('colors', 'green'),
   yellow: themeValue('colors', 'yellow'),
 };
