@@ -43,7 +43,8 @@ export const ControlLeft = styled.div`
   }
 `;
 
-export const DateButton = styled.button`
+export const DatePicker = styled.label`
+  position: relative;
   display: inline-flex;
   min-width: 220px;
   min-height: 44px;
@@ -73,6 +74,24 @@ export const DateButton = styled.button`
 
   @media (max-width: 768px) {
     width: 100%;
+  }
+`;
+
+export const DateInput = styled.input`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+
+  &::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
 `;
 
@@ -545,6 +564,257 @@ export const EmptyText = styled.p`
   margin: 0;
   color: ${token.colors.navyMuted};
   ${token.typography('body')}
+`;
+
+export const ConductForm = styled.form`
+  ${token.flexColumn}
+  gap: ${token.spacing.md};
+`;
+
+export const FormField = styled.div`
+  ${token.flexColumn}
+  gap: ${token.spacing.sm};
+`;
+
+export const FormLabel = styled.label`
+  color: ${token.colors.navy};
+  ${token.typography('caption')}
+  font-weight: 700;
+`;
+
+export const StudentSearchBox = styled.label`
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: ${token.spacing.sm};
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.white};
+
+  &:focus-within {
+    border-color: ${token.colors.blue};
+    box-shadow: 0 0 0 4px ${token.colors.blueTint};
+  }
+`;
+
+export const StudentSearchIcon = styled.img`
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+`;
+
+export const StudentSearchInput = styled.input`
+  width: 100%;
+  border: 0;
+  padding: 0;
+  color: ${token.colors.navy};
+  outline: none;
+  ${token.typography('caption')}
+  font-weight: 600;
+
+  &::placeholder {
+    color: ${token.colors.gray};
+  }
+`;
+
+export const SelectedStudentCard = styled.div`
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${token.spacing.md};
+  border: 1px solid ${token.colors.blue};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.blueTint};
+  color: ${token.colors.navy};
+  ${token.typography('caption')}
+
+  strong {
+    font-weight: 800;
+  }
+
+  span {
+    color: ${token.colors.navyMuted};
+    font-weight: 700;
+  }
+`;
+
+export const StudentResultList = styled.div`
+  display: grid;
+  gap: ${token.spacing.sm};
+  max-height: 188px;
+  overflow-y: auto;
+  padding-right: 2px;
+`;
+
+export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${token.spacing.md};
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.white};
+  color: ${token.colors.navy};
+  cursor: pointer;
+  text-align: left;
+  ${token.typography('caption')}
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+
+  strong {
+    font-weight: 800;
+  }
+
+  &:hover {
+    border-color: ${token.colors.blue};
+    background: ${token.colors.blueTint};
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  ${({ $isSelected }) =>
+    $isSelected &&
+    css`
+      border-color: ${token.colors.blue};
+      background: ${token.colors.blueTint};
+    `}
+`;
+
+export const StudentMeta = styled.span`
+  flex: 0 0 auto;
+  color: ${token.colors.navyMuted};
+  font-weight: 700;
+`;
+
+export const StudentEmptyText = styled.p`
+  margin: 0;
+  padding: ${token.spacing.sm} ${token.spacing.md};
+  color: ${token.colors.navyMuted};
+  ${token.typography('caption')}
+`;
+
+export const FormSelect = styled.select`
+  min-height: 44px;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.white};
+  color: ${token.colors.navy};
+  outline: none;
+  ${token.typography('caption')}
+  font-weight: 600;
+
+  &:focus {
+    border-color: ${token.colors.blue};
+    box-shadow: 0 0 0 4px ${token.colors.blueTint};
+  }
+`;
+
+export const FormInput = styled.input`
+  min-height: 44px;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.white};
+  color: ${token.colors.navy};
+  outline: none;
+  ${token.typography('caption')}
+  font-weight: 600;
+
+  &::placeholder {
+    color: ${token.colors.gray};
+  }
+
+  &:focus {
+    border-color: ${token.colors.blue};
+    box-shadow: 0 0 0 4px ${token.colors.blueTint};
+  }
+`;
+
+export const CategoryGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: ${token.spacing.sm};
+`;
+
+export const CategoryButton = styled.button<{ $isSelected?: boolean }>`
+  min-height: 42px;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  background: ${token.colors.white};
+  color: ${token.colors.navyMuted};
+  cursor: pointer;
+  ${token.typography('caption')}
+  font-weight: 700;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  ${({ $isSelected }) =>
+    $isSelected &&
+    css`
+      border-color: ${token.colors.blue};
+      background: ${token.colors.blue};
+      color: ${token.colors.white};
+    `}
+`;
+
+export const FormError = styled.p`
+  margin: 0;
+  color: ${token.colors.red};
+  ${token.typography('caption')}
+  font-weight: 700;
+`;
+
+export const ModalActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: ${token.spacing.sm};
+  margin-top: ${token.spacing.sm};
+`;
+
+export const SecondaryButton = styled.button`
+  min-width: 76px;
+  min-height: 40px;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  background: ${token.colors.white};
+  color: ${token.colors.navyMuted};
+  cursor: pointer;
+  ${token.typography('caption')}
+  font-weight: 700;
+`;
+
+export const SubmitButton = styled.button`
+  min-width: 76px;
+  min-height: 40px;
+  border: 1px solid ${token.colors.blue};
+  border-radius: ${token.radius.sm};
+  background: ${token.colors.blue};
+  color: ${token.colors.white};
+  cursor: pointer;
+  ${token.typography('caption')}
+  font-weight: 700;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;
 
 export const ModalStateText = styled.p`
