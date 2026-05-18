@@ -70,6 +70,6 @@ export const ActionLink = styled(Link)<{ $variant: 'outline' | 'primary' }>`
   border-radius: ${token.radius.sm};
   ${({ $variant }) => actionLinkVariant[$variant]}
   ${token.typography('caption')}
-  font-weight: 800;
+  font-weight: 600;
   text-decoration: none;
 `;
