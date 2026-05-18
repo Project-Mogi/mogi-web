@@ -12,10 +12,12 @@ export function useSignUpForm() {
   const hasValidRoomNumber = Number(form.roomNumber) > 0;
   const hasValidStudentNumber = Number(form.studentNumber) > 0;
 
-  const isAccountStepValid =
+  const isAccountStepFilled =
     Boolean(form.username.trim()) &&
     Boolean(form.password.trim()) &&
     Boolean(form.email.trim());
+  const isEmailFormatValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+  const isAccountStepValid = isAccountStepFilled && isEmailFormatValid;
 
   const isProfileStepValid =
     Boolean(form.name.trim()) &&
@@ -26,9 +28,19 @@ export function useSignUpForm() {
   const isValid = isAccountStepValid && isProfileStepValid;
 
   const goToNextStep = () => {
-    if (isAccountStepValid) {
-      setStep('profile');
+    setStep('profile');
+  };
+
+  const getAccountStepError = () => {
+    if (!isAccountStepFilled) {
+      return '아이디, 이메일, 비밀번호를 모두 입력해 주세요.';
     }
+
+    if (!isEmailFormatValid) {
+      return '이메일 형식을 확인해 주세요.';
+    }
+
+    return '';
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -75,8 +87,10 @@ export function useSignUpForm() {
     form,
     step,
     isValid,
+    isAccountStepFilled,
     isAccountStepValid,
     goToNextStep,
+    getAccountStepError,
     handleInputChange,
     handleGenderChange,
     createPayload,
