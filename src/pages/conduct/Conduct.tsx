@@ -145,11 +145,10 @@ export function ConductPage() {
           </S.CreateButton>
         </S.FilterPanel>
 
-        {isConductLoading && <S.StateMessage>상벌점 정보를 불러오는 중입니다.</S.StateMessage>}
         {isConductError && (
           <S.StateMessage>{getApiErrorMessage(conductError, '상벌점 정보를 불러오지 못했습니다.')}</S.StateMessage>
         )}
-        {!isConductLoading && !isConductError && (
+        {!isConductError && (
           <S.TableWrap>
             <S.Table>
               <thead>
@@ -165,31 +164,43 @@ export function ConductPage() {
                 </tr>
               </thead>
               <tbody>
-                {tableRows.map((row) => (
-                  <S.TableRow key={`${row.roomNumber}-${row.userId}`} $isSelected={selectedUserId === row.userId}>
-                    <td>{row.roomNumber}</td>
-                    <td>{row.userName}</td>
-                    <td>{getGenderLabel(row.gender, selectedGender)}</td>
-                    <td>{row.studentNumber}</td>
-                    <td>{row.totalRewardPoint}</td>
-                    <td>{row.totalPenaltyPoint}</td>
-                    <td>
-                      <S.Point $value={row.totalPoint}>{row.totalPoint}</S.Point>
-                    </td>
-                    <td>
-                      <S.ActionButton
-                        type="button"
-                        $isSelected={selectedUserId === row.userId}
-                        onClick={() => setSelectedUserId(row.userId)}
-                      >
-                        보기
-                      </S.ActionButton>
-                    </td>
-                  </S.TableRow>
-                ))}
+                {isConductLoading
+                  ? Array.from({ length: 6 }, (_, rowIndex) => (
+                      <S.TableRow key={`conduct-skeleton-${rowIndex}`}>
+                        {Array.from({ length: 8 }, (_, cellIndex) => (
+                          <td key={`conduct-skeleton-${rowIndex}-${cellIndex}`}>
+                            <S.SkeletonBar $width={getSkeletonWidth(cellIndex)} />
+                          </td>
+                        ))}
+                      </S.TableRow>
+                    ))
+                  : tableRows.map((row) => (
+                      <S.TableRow key={`${row.roomNumber}-${row.userId}`} $isSelected={selectedUserId === row.userId}>
+                        <td>{row.roomNumber}</td>
+                        <td>{row.userName}</td>
+                        <td>{getGenderLabel(row.gender, selectedGender)}</td>
+                        <td>{row.studentNumber}</td>
+                        <td>{row.totalRewardPoint}</td>
+                        <td>{row.totalPenaltyPoint}</td>
+                        <td>
+                          <S.Point $value={row.totalPoint}>{row.totalPoint}</S.Point>
+                        </td>
+                        <td>
+                          <S.ActionButton
+                            type="button"
+                            $isSelected={selectedUserId === row.userId}
+                            onClick={() => setSelectedUserId(row.userId)}
+                          >
+                            보기
+                          </S.ActionButton>
+                        </td>
+                      </S.TableRow>
+                    ))}
               </tbody>
             </S.Table>
-            {tableRows.length === 0 && <S.EmptyTableText>조회된 상벌점 정보가 없습니다.</S.EmptyTableText>}
+            {!isConductLoading && tableRows.length === 0 && (
+              <S.EmptyTableText>조회된 상벌점 정보가 없습니다.</S.EmptyTableText>
+            )}
           </S.TableWrap>
         )}
       </S.Page>
@@ -233,7 +244,13 @@ export function ConductPage() {
                 </S.DetailValue>
               </S.DetailItem>
             </S.DetailGrid>
-            {isDetailLoading && <S.ModalStateText>상세 이력을 불러오는 중입니다.</S.ModalStateText>}
+            {isDetailLoading && (
+              <S.ModalSkeletonList>
+                <S.SkeletonBar $width="72%" />
+                <S.SkeletonBar $width="56%" />
+                <S.SkeletonBar $width="64%" />
+              </S.ModalSkeletonList>
+            )}
             {isDetailError && (
               <S.ModalStateText>
                 {getApiErrorMessage(detailError, '상세 상벌점 정보를 불러오지 못했습니다.')}
@@ -332,4 +349,10 @@ function sortConductRows(rows: ConductInfo[], sortOption: SortOption) {
     default:
       return sortedRows.sort((prev, next) => next.userId - prev.userId);
   }
+}
+
+function getSkeletonWidth(cellIndex: number) {
+  const widths = ['48px', '72px', '40px', '68px', '44px', '44px', '44px', '52px'];
+
+  return widths[cellIndex] ?? '60px';
 }

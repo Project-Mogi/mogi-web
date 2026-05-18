@@ -378,6 +378,37 @@ export const EmptyTableText = styled.p`
   ${token.typography('caption')}
 `;
 
+export const SkeletonBar = styled.span<{ $width: string }>`
+  position: relative;
+  display: inline-block;
+  width: ${({ $width }) => $width};
+  max-width: 100%;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: ${token.colors.blueTint};
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.76) 48%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    content: '';
+    animation: skeleton-shimmer 1.2s ease-in-out infinite;
+    transform: translateX(-100%);
+  }
+
+  @keyframes skeleton-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+`;
+
 export const TableRow = styled.tr<{ $isSelected?: boolean }>`
   ${({ $isSelected }) =>
     $isSelected &&
@@ -520,6 +551,12 @@ export const ModalStateText = styled.p`
   margin: ${token.spacing.md} 0 0;
   color: ${token.colors.navyMuted};
   ${token.typography('caption')}
+`;
+
+export const ModalSkeletonList = styled.div`
+  ${token.flexColumn}
+  gap: ${token.spacing.sm};
+  margin-top: ${token.spacing.lg};
 `;
 
 export const HistoryList = styled.div`
