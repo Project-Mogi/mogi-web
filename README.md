@@ -46,6 +46,15 @@ pnpm install
 pnpm dev
 ```
 
+`.env.local`에서 `VITE_DEV_SERVER_HTTPS=true`를 사용하면 로컬 개발 서버가 HTTPS로 실행됩니다.
+로컬 인증서가 없으면 아래 명령으로 생성합니다.
+
+```bash
+mkdir -p .cert
+mkcert -install
+mkcert -key-file .cert/localhost-key.pem -cert-file .cert/localhost.pem localhost 127.0.0.1 ::1
+```
+
 ### 빌드
 
 ```bash
