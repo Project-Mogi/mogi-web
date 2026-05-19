@@ -2,7 +2,6 @@ import { type FormEventHandler } from 'react';
 
 import {
   type ConductCategory,
-  type ConductDetailedInfo,
   type ConductInfo,
 } from '@/features/conduct/api';
 
@@ -11,7 +10,6 @@ import { type CreateConductForm } from './conductForm';
 export interface ConductCreateFormProps {
   form: CreateConductForm;
   historyErrorMessage: string;
-  historyItems: ConductDetailedInfo[];
   historySummary?: {
     totalPenaltyPoint: number;
     totalPoint: number;
