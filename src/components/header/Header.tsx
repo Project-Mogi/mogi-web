@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import textLogo from '@/assets/logos/TextLogo.png';
+import { useToast } from '@/components/toast';
 import { logout } from '@/features/auth/sign-in/api';
 import { clearAuthTokens } from '@/shared/api/token';
 
@@ -14,6 +15,7 @@ type HeaderProps = {
 export function Header({ variant = 'auth' }: HeaderProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { showSuccess } = useToast();
   const isAppHeader = variant === 'app';
 
   const handleLogout = async () => {
@@ -23,6 +25,7 @@ export function Header({ variant = 'auth' }: HeaderProps) {
       clearAuthTokens();
       queryClient.clear();
       navigate('/login', { replace: true });
+      showSuccess('로그아웃 성공');
     }
   };
 

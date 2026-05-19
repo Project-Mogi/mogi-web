@@ -2,6 +2,8 @@ import styled, { css, keyframes } from 'styled-components';
 
 import * as token from '@/shared/styles/token';
 
+import { type ToastVariant } from './Toast';
+
 const toastDrop = keyframes`
   from {
     opacity: 0;
@@ -56,7 +58,7 @@ export const Toast = styled.div<{ $isClosing: boolean }>`
   font-weight: 500;
 `;
 
-export const Icon = styled.span`
+export const Icon = styled.span<{ $variant: ToastVariant }>`
   position: relative;
   display: inline-flex;
   width: 34px;
@@ -65,14 +67,16 @@ export const Icon = styled.span`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: ${token.colors.pinkTint};
+  background: ${({ $variant, theme }) =>
+    $variant === 'success' ? theme.colors.blueTint : theme.colors.pinkTint};
 `;
 
-export const IconMark = styled.span`
+export const IconMark = styled.span<{ $variant: ToastVariant }>`
   position: relative;
   width: 19px;
   height: 19px;
-  border: 2px solid ${token.colors.red};
+  border: 2px solid
+    ${({ $variant, theme }) => ($variant === 'success' ? theme.colors.blue : theme.colors.red)};
   border-radius: 50%;
 
   &::before,
@@ -83,16 +87,33 @@ export const IconMark = styled.span`
     width: 9px;
     height: 2px;
     border-radius: 999px;
-    background: ${token.colors.red};
+    background: ${({ $variant, theme }) =>
+      $variant === 'success' ? theme.colors.blue : theme.colors.red};
     content: '';
   }
 
   &::before {
-    transform: translate(-50%, -50%) rotate(45deg);
+    ${({ $variant }) =>
+      $variant === 'success'
+        ? css`
+            width: 5px;
+            transform: translate(-75%, 0) rotate(45deg);
+          `
+        : css`
+            transform: translate(-50%, -50%) rotate(45deg);
+          `}
   }
 
   &::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
+    ${({ $variant }) =>
+      $variant === 'success'
+        ? css`
+            width: 10px;
+            transform: translate(-20%, -20%) rotate(-45deg);
+          `
+        : css`
+            transform: translate(-50%, -50%) rotate(-45deg);
+          `}
   }
 `;
 

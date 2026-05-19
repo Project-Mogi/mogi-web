@@ -25,7 +25,7 @@ export type ApiErrorCode =
   | 'DUPLICATE_USERNAME'
   | 'DUPLICATE_EMAIL';
 
-export function getApiErrorMessage(error: unknown, fallbackMessage = '요청에 실패했습니다.') {
+export function getApiErrorMessage(error: unknown, fallbackMessage = '요청 실패') {
   if (isApiErrorResponse(error)) {
     return error.error?.message ?? fallbackMessage;
   }

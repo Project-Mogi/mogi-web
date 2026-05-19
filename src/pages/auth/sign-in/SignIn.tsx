@@ -1,10 +1,10 @@
-import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
+import { type ComponentPropsWithoutRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
 import { Header } from '@/components/header';
-import { Toast } from '@/components/toast';
+import { useToast } from '@/components/toast';
 import { signIn } from '@/features/auth/sign-in/api';
 import { getApiErrorMessage } from '@/shared/api/types';
 import { setAuthTokens } from '@/shared/api/token';
@@ -15,63 +15,30 @@ export function SignInPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
+  const { showError, showSuccess } = useToast();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [toast, setToast] = useState<{
-    id: number;
-    message: string;
-    isClosing: boolean;
-  } | null>(null);
-  const toastId = toast?.id;
 
   const signInMutation = useMutation({
     mutationFn: signIn,
     onSuccess: ({ accessToken, refreshToken }) => {
       setAuthTokens({ accessToken, refreshToken });
       queryClient.removeQueries({ queryKey: ['conduct'] });
+      showSuccess('로그인 성공');
       navigate(getRedirectPath(location.state), { replace: true });
     },
     onError: (error) => {
-      showToast(getApiErrorMessage(error, '아이디 또는 비밀번호가 올바르지 않습니다'));
+      showError(getApiErrorMessage(error, '로그인 실패'));
     },
   });
 
   const isDisabled = !username.trim() || !password.trim() || signInMutation.isPending;
 
-  const showToast = (message: string) => {
-    setToast({
-      id: Date.now(),
-      message,
-      isClosing: false,
-    });
-  };
-
-  useEffect(() => {
-    if (!toastId) {
-      return;
-    }
-
-    const closeTimerId = window.setTimeout(() => {
-      setToast((currentToast) =>
-        currentToast?.id === toastId ? { ...currentToast, isClosing: true } : currentToast,
-      );
-    }, 2000);
-
-    const removeTimerId = window.setTimeout(() => {
-      setToast((currentToast) => (currentToast?.id === toastId ? null : currentToast));
-    }, 2200);
-
-    return () => {
-      window.clearTimeout(closeTimerId);
-      window.clearTimeout(removeTimerId);
-    };
-  }, [toastId]);
-
   const handleSubmit: NonNullable<ComponentPropsWithoutRef<'form'>['onSubmit']> = (event) => {
     event.preventDefault();
 
     if (!username.trim() || !password.trim()) {
-      showToast('아이디와 비밀번호를 입력해 주세요');
+      showError('아이디와 비밀번호를 입력해 주세요');
       return;
     }
 
@@ -83,7 +50,6 @@ export function SignInPage() {
 
   return (
     <S.Page>
-      <Toast key={toast?.id} message={toast?.message ?? ''} isClosing={toast?.isClosing} />
       <Header />
 
       <S.Content>

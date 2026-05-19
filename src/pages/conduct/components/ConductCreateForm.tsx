@@ -4,7 +4,6 @@ import * as S from '../Conduct.style';
 import { type ConductCreateFormProps } from '../types';
 
 export function ConductCreateForm({
-  errorMessage,
   form,
   historyErrorMessage,
   historyItems,
@@ -177,8 +176,6 @@ export function ConductCreateForm({
             onChange={(event) => onScoreChange(event.target.value)}
           />
         </S.FormField>
-
-        {errorMessage && <S.FormError>{errorMessage}</S.FormError>}
 
         <S.FormActions>
           <S.SecondaryButton type="button" onClick={onCancel}>

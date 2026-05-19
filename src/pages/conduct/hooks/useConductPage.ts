@@ -25,7 +25,7 @@ export function useConductPage() {
     tableProps: {
       errorMessage: getApiErrorMessage(
         conductListQuery.error,
-        '상벌점 정보를 불러오지 못했습니다',
+        '상벌점 정보 조회 실패',
       ),
       isError: conductListQuery.isError,
       isLoading: conductListQuery.isLoading,

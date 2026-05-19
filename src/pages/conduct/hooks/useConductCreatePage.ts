@@ -1,6 +1,7 @@
 import { type FormEventHandler, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { useToast } from '@/components/toast';
 import { type ConductCategory } from '@/features/conduct/api';
 import {
   useConductDetailQuery,
@@ -14,6 +15,7 @@ import { type CreateConductForm } from '../types';
 
 export function useConductCreatePage() {
   const navigate = useNavigate();
+  const { showError, showSuccess } = useToast();
   const [searchParams] = useSearchParams();
   const defaultUserId = searchParams.get('userId') ?? '';
   const conductListQuery = useConductInfosQuery({});
@@ -22,7 +24,6 @@ export function useConductCreatePage() {
     ...initialCreateConductForm,
     userId: defaultUserId,
   });
-  const [errorMessage, setErrorMessage] = useState('');
   const [studentKeyword, setStudentKeyword] = useState('');
   const [isDefaultStudentSearchActive, setIsDefaultStudentSearchActive] = useState(Boolean(defaultUserId));
 
@@ -57,9 +58,12 @@ export function useConductCreatePage() {
   const studentResults = filteredStudents;
 
   const createConductMutation = useCreateConductMutation({
-    onSuccess: () => navigate('/conduct'),
+    onSuccess: () => {
+      showSuccess('상벌점 부여 성공');
+      navigate('/conduct');
+    },
     onError: (error) => {
-      setErrorMessage(getApiErrorMessage(error, '상벌점 부여에 실패했습니다'));
+      showError(getApiErrorMessage(error, '상벌점 부여 실패'));
     },
   });
 
@@ -73,7 +77,6 @@ export function useConductCreatePage() {
   function selectStudent(userId: number) {
     updateForm('userId', form.userId === String(userId) ? '' : String(userId));
     setIsDefaultStudentSearchActive(false);
-    setErrorMessage('');
   }
 
   function updateCategory(conductCategory: ConductCategory) {
@@ -105,16 +108,15 @@ export function useConductCreatePage() {
     const score = Number(form.score);
 
     if (!userId) {
-      setErrorMessage('학생을 선택해 주세요');
+      showError('학생을 선택해 주세요');
       return;
     }
 
     if (!Number.isInteger(score) || score < 1) {
-      setErrorMessage('점수는 1점 이상으로 입력해 주세요');
+      showError('점수는 1점 이상으로 입력해 주세요');
       return;
     }
 
-    setErrorMessage('');
     createConductMutation.mutate({
       userId,
       conductCategory: form.conductCategory,
@@ -126,11 +128,10 @@ export function useConductCreatePage() {
 
   return {
     formProps: {
-      errorMessage,
       form,
       historyErrorMessage: getApiErrorMessage(
         selectedStudentDetailQuery.error,
-        '상벌점 이력을 불러오지 못했습니다',
+        '상벌점 이력 조회 실패',
       ),
       historyItems: selectedStudentDetailQuery.data?.conductDetailedInfo ?? [],
       historySummary: selectedStudentDetailQuery.data
@@ -160,7 +161,7 @@ export function useConductCreatePage() {
     isStudentListLoading: conductListQuery.isLoading,
     studentListErrorMessage: getApiErrorMessage(
       conductListQuery.error,
-      '학생 정보를 불러오지 못했습니다',
+      '학생 정보 조회 실패',
     ),
     onCancel: goBackToList,
   };

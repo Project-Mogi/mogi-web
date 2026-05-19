@@ -964,13 +964,6 @@ export const CategoryButton = styled.button<{
     `}
 `;
 
-export const FormError = styled.p`
-  margin: 0;
-  color: ${token.colors.red};
-  ${token.typography('caption')}
-  font-weight: 700;
-`;
-
 export const FormActions = styled.div`
   display: flex;
   justify-content: flex-end;

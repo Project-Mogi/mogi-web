@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
+import { type ComponentPropsWithoutRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import logo from '@/assets/logos/Logo.png';
 import { Header } from '@/components/header';
-import { Toast } from '@/components/toast';
+import { useToast } from '@/components/toast';
 import { signUp } from '@/features/auth/sign-up/api';
 import { getApiErrorMessage } from '@/shared/api/types';
 
@@ -13,6 +13,7 @@ import * as S from './SignUp.style';
 
 export function SignUpPage() {
   const navigate = useNavigate();
+  const { showError, showSuccess } = useToast();
   const {
     form,
     step,
@@ -24,49 +25,15 @@ export function SignUpPage() {
     handleGenderChange,
     createPayload,
   } = useSignUpForm();
-  const [toast, setToast] = useState<{
-    id: number;
-    message: string;
-    isClosing: boolean;
-  } | null>(null);
-  const toastId = toast?.id;
-
-  const showToast = (message: string) => {
-    setToast({
-      id: Date.now(),
-      message,
-      isClosing: false,
-    });
-  };
-
-  useEffect(() => {
-    if (!toastId) {
-      return;
-    }
-
-    const closeTimerId = window.setTimeout(() => {
-      setToast((currentToast) =>
-        currentToast?.id === toastId ? { ...currentToast, isClosing: true } : currentToast,
-      );
-    }, 2000);
-
-    const removeTimerId = window.setTimeout(() => {
-      setToast((currentToast) => (currentToast?.id === toastId ? null : currentToast));
-    }, 2200);
-
-    return () => {
-      window.clearTimeout(closeTimerId);
-      window.clearTimeout(removeTimerId);
-    };
-  }, [toastId]);
 
   const signUpMutation = useMutation({
     mutationFn: signUp,
     onSuccess: () => {
+      showSuccess('회원가입 성공');
       navigate('/login', { replace: true });
     },
     onError: (error) => {
-      showToast(getApiErrorMessage(error, '회원가입에 실패했습니다'));
+      showError(getApiErrorMessage(error, '회원가입 실패'));
     },
   });
 
@@ -79,7 +46,7 @@ export function SignUpPage() {
       const accountStepError = getAccountStepError();
 
       if (accountStepError) {
-        showToast(accountStepError);
+        showError(accountStepError);
         return;
       }
 
@@ -100,7 +67,6 @@ export function SignUpPage() {
 
   return (
     <S.Page>
-      <Toast key={toast?.id} message={toast?.message ?? ''} isClosing={toast?.isClosing} />
       <Header />
 
       <S.Content>

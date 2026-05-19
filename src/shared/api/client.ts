@@ -1,6 +1,6 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
-import { clearAuthTokens, getAccessToken, setAccessToken } from './token';
+import { clearAuthTokens, getAccessToken, getRefreshToken, setAccessToken } from './token';
 import { type ApiResponse } from './types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
@@ -72,7 +72,7 @@ function shouldRefreshToken(
     return false;
   }
 
-  return Boolean(getAccessToken());
+  return Boolean(getRefreshToken());
 }
 
 async function refreshAccessToken() {
@@ -83,19 +83,31 @@ async function refreshAccessToken() {
   return refreshAccessTokenPromise;
 }
 
-async function requestAccessTokenRefresh() {
+export async function ensureAccessToken() {
   const accessToken = getAccessToken();
 
+  if (accessToken) {
+    return accessToken;
+  }
+
+  return refreshAccessToken();
+}
+
+async function requestAccessTokenRefresh() {
+  const refreshToken = getRefreshToken();
+
+  if (!refreshToken) {
+    throw new Error('토큰 재발급 실패');
+  }
+
   const response = await tokenRefreshClient.post<ApiResponse<string>>('/auth/refresh', null, {
-    headers: accessToken
-      ? {
-          Authorization: `Bearer ${accessToken}`,
-        }
-      : undefined,
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+    },
   });
 
   if (!response.data.success || !response.data.data) {
-    throw new Error(response.data.error?.message ?? '토큰 재발급에 실패했습니다.');
+    throw new Error(response.data.error?.message ?? '토큰 재발급 실패');
   }
 
   setAccessToken(response.data.data);

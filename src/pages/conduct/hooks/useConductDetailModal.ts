@@ -27,7 +27,7 @@ export function useConductDetailModal(conductInfos: ConductInfo[], selectedGende
     modalProps: selectedStudent
       ? {
           detail: selectedStudentDetail,
-          errorMessage: getApiErrorMessage(error, '상세 상벌점 정보를 불러오지 못했습니다.'),
+          errorMessage: getApiErrorMessage(error, '상세 상벌점 정보 조회 실패'),
           isError,
           isLoading,
           selectedGender,

@@ -9,7 +9,6 @@ import {
 import { type CreateConductForm } from './conductForm';
 
 export interface ConductCreateFormProps {
-  errorMessage: string;
   form: CreateConductForm;
   historyErrorMessage: string;
   historyItems: ConductDetailedInfo[];
