@@ -22,20 +22,29 @@ export function useConductCreatePage() {
   const [studentKeyword, setStudentKeyword] = useState('');
 
   const selectedStudent = conductInfos.find((student) => student.userId === Number(form.userId));
+  const sortedStudents = useMemo(
+    () =>
+      [...conductInfos].sort(
+        (prevStudent, nextStudent) =>
+          prevStudent.roomNumber - nextStudent.roomNumber ||
+          prevStudent.studentNumber - nextStudent.studentNumber ||
+          prevStudent.userName.localeCompare(nextStudent.userName, 'ko'),
+      ),
+    [conductInfos],
+  );
   const filteredStudents = useMemo(() => {
     const keyword = studentKeyword.trim();
 
     if (!keyword) {
-      return conductInfos;
+      return sortedStudents;
     }
 
-    return conductInfos
-      .filter((student) =>
-        [student.userName, String(student.studentNumber), String(student.roomNumber)].some((value) =>
-          value.includes(keyword),
-        ),
-      );
-  }, [conductInfos, studentKeyword]);
+    return sortedStudents.filter((student) =>
+      [student.userName, String(student.studentNumber), String(student.roomNumber)].some((value) =>
+        value.includes(keyword),
+      ),
+    );
+  }, [sortedStudents, studentKeyword]);
   const studentResults = filteredStudents;
 
   const createConductMutation = useCreateConductMutation({

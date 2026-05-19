@@ -47,7 +47,7 @@ export function ConductCreateForm({
         <S.CreateSectionHeader>
           <S.CreateSectionTitle>학생 선택</S.CreateSectionTitle>
           <S.CreateSectionMeta>
-            {searchKeyword ? `${searchResultCount}명 검색됨` : `전체 ${totalStudentCount}명`}
+            {searchKeyword ? `${searchResultCount}명 검색됨` : `전체 ${totalStudentCount}명 · 호실순`}
           </S.CreateSectionMeta>
         </S.CreateSectionHeader>
 
@@ -116,20 +116,20 @@ export function ConductCreateForm({
         <S.FormField>
           <S.FormLabel>구분</S.FormLabel>
           <S.CategoryGroup>
-          <S.CategoryButton
-            type="button"
-            $variant="reward"
-            $isSelected={form.conductCategory === 'REWARD'}
-            onClick={() => onCategoryChange('REWARD')}
-          >
-            상점
-          </S.CategoryButton>
-          <S.CategoryButton
-            type="button"
-            $variant="penalty"
-            $isSelected={form.conductCategory === 'PENALTY'}
-            onClick={() => onCategoryChange('PENALTY')}
-          >
+            <S.CategoryButton
+              type="button"
+              $variant="reward"
+              $isSelected={form.conductCategory === 'REWARD'}
+              onClick={() => onCategoryChange('REWARD')}
+            >
+              상점
+            </S.CategoryButton>
+            <S.CategoryButton
+              type="button"
+              $variant="penalty"
+              $isSelected={form.conductCategory === 'PENALTY'}
+              onClick={() => onCategoryChange('PENALTY')}
+            >
               벌점
             </S.CategoryButton>
           </S.CategoryGroup>

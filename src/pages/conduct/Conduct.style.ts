@@ -19,7 +19,7 @@ export const Page = styled.main`
 
 export const CreatePageHeader = styled.header`
   display: flex;
-  max-width: 1040px;
+  max-width: 1180px;
   align-items: flex-start;
   justify-content: space-between;
   gap: ${token.spacing.md};
@@ -42,7 +42,7 @@ export const CreatePageTitle = styled.h1`
 `;
 
 export const CreateFormPanel = styled.section`
-  width: min(1040px, 100%);
+  width: min(1180px, 100%);
   box-sizing: border-box;
   background: ${token.colors.white};
 `;
@@ -603,7 +603,7 @@ export const EmptyText = styled.p`
 
 export const ConductForm = styled.form`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: ${token.spacing.lg};
 
   @media (max-width: 980px) {
