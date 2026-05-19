@@ -197,7 +197,7 @@ export const ControlRight = styled.div`
 export const SortLabel = styled.label`
   color: ${token.colors.navy};
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const CreateButton = styled.button`
@@ -209,7 +209,7 @@ export const CreateButton = styled.button`
   color: ${token.colors.white};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 600;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
@@ -241,7 +241,7 @@ export const SortSelect = styled.select`
   cursor: pointer;
   outline: none;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -287,7 +287,7 @@ export const FilterGroup = styled.div`
 export const FilterLabel = styled.span`
   color: ${token.colors.navy};
   ${token.typography('caption')}
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const FilterButton = styled.button<{ $isSelected?: boolean }>`
@@ -299,7 +299,7 @@ export const FilterButton = styled.button<{ $isSelected?: boolean }>`
   color: ${token.colors.navyMuted};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 600;
+  font-weight: 500;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
@@ -388,7 +388,7 @@ export const Table = styled.table`
 
   th {
     background: ${token.colors.blueTint};
-    font-weight: 700;
+    font-weight: 600;
   }
 
   tbody tr:hover {
@@ -467,7 +467,7 @@ export const ActionButton = styled.button<{ $isSelected?: boolean }>`
   color: ${token.colors.navy};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 600;
+  font-weight: 500;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
@@ -505,7 +505,7 @@ export const Point = styled.span<{ $value: number }>`
       : css`
           color: ${token.colors.blue};
         `}
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 export const ModalOverlay = styled.div`
@@ -551,7 +551,7 @@ export const ModalCloseButton = styled.button`
   color: ${token.colors.navyMuted};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
 
   &:active {
     transform: translateY(1px);
@@ -580,6 +580,7 @@ export const DetailLabel = styled.p`
 export const DetailValue = styled.strong`
   color: ${token.colors.navy};
   ${token.typography('body')}
+  font-weight: 500;
 `;
 
 export const EmptyText = styled.p`
@@ -633,13 +634,13 @@ export const CreateSectionTitle = styled.h2`
   margin: 0;
   color: ${token.colors.navy};
   ${token.typography('body')}
-  font-weight: 800;
+  font-weight: 600;
 `;
 
 export const CreateSectionMeta = styled.span`
   color: ${token.colors.navyMuted};
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const FormField = styled.div`
@@ -650,7 +651,7 @@ export const FormField = styled.div`
 export const FormLabel = styled.label`
   color: ${token.colors.navy};
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 export const StudentSearchBox = styled.label`
@@ -682,7 +683,7 @@ export const StudentSearchInput = styled.input`
   color: ${token.colors.navy};
   outline: none;
   ${token.typography('caption')}
-  font-weight: 600;
+  font-weight: 400;
 
   &::placeholder {
     color: ${token.colors.gray};
@@ -698,7 +699,7 @@ export const SearchClearButton = styled.button`
   color: ${token.colors.navyMuted};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
 
   &:hover {
     border-color: ${token.colors.blueLineStrong};
@@ -722,12 +723,12 @@ export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
 
   strong {
     ${token.typography('body')}
-    font-weight: 800;
+    font-weight: 600;
   }
 
   span {
     color: ${token.colors.navyMuted};
-    font-weight: 700;
+    font-weight: 500;
   }
 `;
 
@@ -749,7 +750,7 @@ export const PreviousHistoryTitle = styled.h3`
   margin: 0;
   color: ${token.colors.navy};
   ${token.typography('caption')}
-  font-weight: 800;
+  font-weight: 600;
 `;
 
 export const PreviousHistoryState = styled.p`
@@ -759,7 +760,7 @@ export const PreviousHistoryState = styled.p`
   background: ${token.colors.blueTint};
   color: ${token.colors.navyMuted};
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const PreviousHistorySkeleton = styled.div`
@@ -787,7 +788,7 @@ export const HistorySummaryItem = styled.div<{ $variant: 'penalty' | 'reward' | 
   span {
     color: ${token.colors.navyMuted};
     ${token.typography('caption')}
-    font-weight: 700;
+    font-weight: 500;
   }
 
   strong {
@@ -803,7 +804,7 @@ export const HistorySummaryItem = styled.div<{ $variant: 'penalty' | 'reward' | 
       return theme.colors.navy;
     }};
     ${token.typography('caption')}
-    font-weight: 900;
+    font-weight: 600;
   }
 `;
 
@@ -835,7 +836,7 @@ export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
     transform 0.15s ease;
 
   strong {
-    font-weight: 800;
+    font-weight: 600;
   }
 
   &:hover {
@@ -862,12 +863,12 @@ export const StudentResultMain = styled.span`
 
   strong {
     color: ${token.colors.navy};
-    font-weight: 800;
+    font-weight: 600;
   }
 
   span {
     color: ${token.colors.navyMuted};
-    font-weight: 700;
+    font-weight: 500;
   }
 `;
 
@@ -877,7 +878,7 @@ export const StudentResultAside = styled.span`
   align-items: center;
   gap: ${token.spacing.sm};
   color: ${token.colors.navyMuted};
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const StudentSelectLabel = styled.span`
@@ -887,7 +888,7 @@ export const StudentSelectLabel = styled.span`
   background: ${token.colors.blueTint};
   color: ${token.colors.blueHover};
   text-align: center;
-  font-weight: 800;
+  font-weight: 600;
 `;
 
 export const StudentEmptyText = styled.p`
@@ -906,7 +907,7 @@ export const FormInput = styled.input`
   color: ${token.colors.navy};
   outline: none;
   ${token.typography('caption')}
-  font-weight: 600;
+  font-weight: 400;
 
   &::placeholder {
     color: ${token.colors.gray};
@@ -935,7 +936,7 @@ export const CategoryButton = styled.button<{
   color: ${token.colors.navyMuted};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 600;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
@@ -980,7 +981,7 @@ export const SecondaryButton = styled.button`
   color: ${token.colors.navyMuted};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 export const SubmitButton = styled.button`
@@ -992,7 +993,7 @@ export const SubmitButton = styled.button`
   color: ${token.colors.white};
   cursor: pointer;
   ${token.typography('caption')}
-  font-weight: 700;
+  font-weight: 600;
 
   &:disabled {
     cursor: not-allowed;
