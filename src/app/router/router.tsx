@@ -12,6 +12,7 @@ import { StudentDetailPage } from '@/pages/student-detail';
 import { StudentsPage } from '@/pages/students';
 
 import { ProtectedRoute } from './ProtectedRoute';
+import { PublicOnlyRoute } from './PublicOnlyRoute';
 
 export const router = createBrowserRouter([
   {
@@ -20,11 +21,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <SignInPage />,
+    element: withPublicOnly(<SignInPage />),
   },
   {
     path: '/signup',
-    element: <SignUpPage />,
+    element: withPublicOnly(<SignUpPage />),
   },
   {
     path: '/dashboard',
@@ -62,4 +63,8 @@ export const router = createBrowserRouter([
 
 function withAuth(element: ReactNode) {
   return <ProtectedRoute>{element}</ProtectedRoute>;
+}
+
+function withPublicOnly(element: ReactNode) {
+  return <PublicOnlyRoute>{element}</PublicOnlyRoute>;
 }
