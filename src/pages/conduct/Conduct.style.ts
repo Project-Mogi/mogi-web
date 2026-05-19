@@ -825,34 +825,11 @@ export const StudentSelectLabel = styled.span`
   font-weight: 800;
 `;
 
-export const StudentMeta = styled.span`
-  flex: 0 0 auto;
-  color: ${token.colors.navyMuted};
-  font-weight: 700;
-`;
-
 export const StudentEmptyText = styled.p`
   margin: 0;
   padding: ${token.spacing.sm} ${token.spacing.md};
   color: ${token.colors.navyMuted};
   ${token.typography('caption')}
-`;
-
-export const FormSelect = styled.select`
-  min-height: 44px;
-  border: 1px solid ${token.colors.blueLine};
-  border-radius: ${token.radius.sm};
-  padding: 0 ${token.spacing.md};
-  background: ${token.colors.white};
-  color: ${token.colors.navy};
-  outline: none;
-  ${token.typography('caption')}
-  font-weight: 600;
-
-  &:focus {
-    border-color: ${token.colors.blue};
-    box-shadow: 0 0 0 4px ${token.colors.blueTint};
-  }
 `;
 
 export const FormInput = styled.input`
