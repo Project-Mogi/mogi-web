@@ -842,6 +842,13 @@ export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
       border-color: ${token.colors.blue};
       background: ${token.colors.white};
       box-shadow: inset 3px 0 0 ${token.colors.blue};
+
+      &:hover {
+        border-color: ${token.colors.blue};
+        box-shadow:
+          inset 3px 0 0 ${token.colors.blue},
+          0 8px 22px rgba(25, 33, 58, 0.04);
+      }
     `}
 `;
 
