@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { SignInPage } from '@/pages/auth/sign-in';
 import { SignUpPage } from '@/pages/auth/sign-up';
-import { ConductPage } from '@/pages/conduct';
+import { ConductCreatePage, ConductPage } from '@/pages/conduct';
 import { DashboardPage } from '@/pages/dashboard';
 import { HistoriesPage } from '@/pages/histories';
 import { NotFoundPage } from '@/pages/not-found';
@@ -41,6 +41,10 @@ export const router = createBrowserRouter([
   {
     path: '/conduct',
     element: withAuth(<ConductPage />),
+  },
+  {
+    path: '/conduct/create',
+    element: withAuth(<ConductCreatePage />),
   },
   {
     path: '/histories',
