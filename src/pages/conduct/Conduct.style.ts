@@ -19,7 +19,7 @@ export const Page = styled.main`
 
 export const CreatePageHeader = styled.header`
   display: flex;
-  max-width: 640px;
+  max-width: 1040px;
   align-items: flex-start;
   justify-content: space-between;
   gap: ${token.spacing.md};
@@ -41,20 +41,10 @@ export const CreatePageTitle = styled.h1`
   ${token.typography('heading')}
 `;
 
-export const CreatePageDescription = styled.p`
-  margin: 0;
-  color: ${token.colors.navyMuted};
-  ${token.typography('caption')}
-`;
-
 export const CreateFormPanel = styled.section`
-  width: min(640px, 100%);
+  width: min(1040px, 100%);
   box-sizing: border-box;
-  border: 1px solid ${token.colors.blueLine};
-  border-radius: ${token.radius.sm};
-  padding: ${token.spacing.lg};
   background: ${token.colors.white};
-  box-shadow: 0 10px 28px rgba(25, 33, 58, 0.04);
 `;
 
 export const CreateFormSkeleton = styled.div`
@@ -612,8 +602,55 @@ export const EmptyText = styled.p`
 `;
 
 export const ConductForm = styled.form`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: ${token.spacing.lg};
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const StudentPickerPanel = styled.section`
+  ${token.flexColumn}
+  min-width: 0;
+  gap: ${token.spacing.md};
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.lg};
+  background: ${token.colors.white};
+  box-shadow: 0 10px 28px rgba(25, 33, 58, 0.04);
+`;
+
+export const ConductAssignPanel = styled.section`
   ${token.flexColumn}
   gap: ${token.spacing.md};
+  align-self: start;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.lg};
+  background: ${token.colors.white};
+  box-shadow: 0 10px 28px rgba(25, 33, 58, 0.04);
+`;
+
+export const CreateSectionHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${token.spacing.md};
+`;
+
+export const CreateSectionTitle = styled.h2`
+  margin: 0;
+  color: ${token.colors.navy};
+  ${token.typography('body')}
+  font-weight: 800;
+`;
+
+export const CreateSectionMeta = styled.span`
+  color: ${token.colors.navyMuted};
+  ${token.typography('caption')}
+  font-weight: 700;
 `;
 
 export const FormField = styled.div`
@@ -629,7 +666,7 @@ export const FormLabel = styled.label`
 
 export const StudentSearchBox = styled.label`
   display: flex;
-  min-height: 44px;
+  min-height: 52px;
   align-items: center;
   gap: ${token.spacing.sm};
   border: 1px solid ${token.colors.blueLine};
@@ -663,20 +700,39 @@ export const StudentSearchInput = styled.input`
   }
 `;
 
-export const SelectedStudentCard = styled.div`
-  display: flex;
-  min-height: 42px;
-  align-items: center;
-  justify-content: space-between;
-  gap: ${token.spacing.md};
-  border: 1px solid ${token.colors.blue};
+export const SearchClearButton = styled.button`
+  min-width: 56px;
+  min-height: 32px;
+  border: 1px solid ${token.colors.blueLine};
   border-radius: ${token.radius.sm};
-  padding: 0 ${token.spacing.md};
-  background: ${token.colors.blueTint};
+  background: ${token.colors.white};
+  color: ${token.colors.navyMuted};
+  cursor: pointer;
+  ${token.typography('caption')}
+  font-weight: 700;
+
+  &:hover {
+    border-color: ${token.colors.blueLineStrong};
+    color: ${token.colors.navy};
+  }
+`;
+
+export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
+  display: flex;
+  min-height: 84px;
+  flex-direction: column;
+  justify-content: center;
+  gap: ${token.spacing.xs};
+  border: 1px solid
+    ${({ $isEmpty, theme }) => ($isEmpty ? theme.colors.blueLine : theme.colors.blue)};
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.md};
+  background: ${({ $isEmpty, theme }) => ($isEmpty ? theme.colors.white : theme.colors.blueTint)};
   color: ${token.colors.navy};
   ${token.typography('caption')}
 
   strong {
+    ${token.typography('body')}
     font-weight: 800;
   }
 
@@ -689,20 +745,20 @@ export const SelectedStudentCard = styled.div`
 export const StudentResultList = styled.div`
   display: grid;
   gap: ${token.spacing.sm};
-  max-height: 188px;
+  max-height: 520px;
   overflow-y: auto;
   padding-right: 2px;
 `;
 
 export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
   display: flex;
-  min-height: 44px;
+  min-height: 64px;
   align-items: center;
   justify-content: space-between;
   gap: ${token.spacing.md};
   border: 1px solid ${token.colors.blueLine};
   border-radius: ${token.radius.sm};
-  padding: 0 ${token.spacing.md};
+  padding: ${token.spacing.sm} ${token.spacing.md};
   background: ${token.colors.white};
   color: ${token.colors.navy};
   cursor: pointer;
@@ -732,6 +788,41 @@ export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
       border-color: ${token.colors.blue};
       background: ${token.colors.blueTint};
     `}
+`;
+
+export const StudentResultMain = styled.span`
+  ${token.flexColumn}
+  min-width: 0;
+  gap: 2px;
+
+  strong {
+    color: ${token.colors.navy};
+    font-weight: 800;
+  }
+
+  span {
+    color: ${token.colors.navyMuted};
+    font-weight: 700;
+  }
+`;
+
+export const StudentResultAside = styled.span`
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: ${token.spacing.sm};
+  color: ${token.colors.navyMuted};
+  font-weight: 700;
+`;
+
+export const StudentSelectLabel = styled.span`
+  min-width: 52px;
+  border-radius: 999px;
+  padding: 4px ${token.spacing.sm};
+  background: ${token.colors.blueTint};
+  color: ${token.colors.blueHover};
+  text-align: center;
+  font-weight: 800;
 `;
 
 export const StudentMeta = styled.span`
