@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
+import notFoundHero from '@/assets/images/not-found-hero.png';
 import { Header } from '@/components/header';
 
 import * as S from './NotFound.style';
@@ -12,10 +13,7 @@ export function NotFoundPage() {
       <Header variant="app" />
       <S.Page>
         <S.Content>
-          <S.Mark aria-hidden="true">
-            <span>404</span>
-          </S.Mark>
-          <S.Eyebrow>잘못된 경로</S.Eyebrow>
+          <S.HeroImage src={notFoundHero} alt="" aria-hidden="true" />
           <S.Title>페이지를 찾을 수 없습니다</S.Title>
           <S.Description>주소를 다시 확인하거나 상벌점 관리 화면으로 이동해 주세요</S.Description>
           <S.Actions>

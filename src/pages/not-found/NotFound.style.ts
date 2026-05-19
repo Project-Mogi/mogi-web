@@ -20,62 +20,39 @@ export const Content = styled.section`
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding-bottom: 72px;
+  padding-bottom: 32px;
   text-align: center;
 
   @media (max-width: 768px) {
     min-height: calc(100dvh - 64px - (${token.spacing.lg} * 2));
-    padding-bottom: 40px;
+    padding-bottom: 24px;
+  }
+`;
+
+export const HeroImage = styled.img`
+  width: min(760px, 100%);
+  height: auto;
+  margin-bottom: ${token.spacing.lg};
+  object-fit: contain;
+  user-select: none;
+
+  @media (max-width: 768px) {
+    width: min(560px, 100%);
+    margin-bottom: ${token.spacing.md};
   }
 `;
 
 export const Title = styled.h1`
-  margin: ${token.spacing.sm} 0 0;
+  margin: 0;
   color: ${token.colors.navy};
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
-  line-height: 38px;
+  line-height: 36px;
 
   @media (max-width: 768px) {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 22px;
+    line-height: 30px;
   }
-`;
-
-export const Mark = styled.div`
-  position: relative;
-  display: inline-flex;
-  width: 116px;
-  height: 116px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid ${token.colors.blueLine};
-  border-radius: 999px;
-  background: ${token.colors.white};
-  box-shadow: 0 18px 44px rgba(25, 33, 58, 0.08);
-
-  &::before {
-    position: absolute;
-    inset: 10px;
-    border: 1px solid ${token.colors.blueLine};
-    border-radius: inherit;
-    content: '';
-  }
-
-  span {
-    color: ${token.colors.blueHover};
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 1;
-  }
-`;
-
-export const Eyebrow = styled.p`
-  margin: 0;
-  margin-top: ${token.spacing.xl};
-  color: ${token.colors.blueHover};
-  ${token.typography('caption')}
-  font-weight: 600;
 `;
 
 export const Description = styled.p`
@@ -90,7 +67,7 @@ export const Actions = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: ${token.spacing.md};
-  margin-top: ${token.spacing.xl};
+  margin-top: ${token.spacing.lg};
 
   @media (max-width: 480px) {
     width: 100%;
