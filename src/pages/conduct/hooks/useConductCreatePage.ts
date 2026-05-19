@@ -71,7 +71,7 @@ export function useConductCreatePage() {
   }
 
   function selectStudent(userId: number) {
-    updateForm('userId', String(userId));
+    updateForm('userId', form.userId === String(userId) ? '' : String(userId));
     setIsDefaultStudentSearchActive(false);
     setErrorMessage('');
   }
