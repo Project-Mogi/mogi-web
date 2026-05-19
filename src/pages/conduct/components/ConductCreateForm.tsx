@@ -1,5 +1,8 @@
+import { useEffect, useRef, useState } from 'react';
+
 import searchIcon from '@/assets/icons/iconamoon_search.svg';
 
+import { conductScoreOptions } from '../constants';
 import * as S from '../Conduct.style';
 import { type ConductCreateFormProps } from '../types';
 
@@ -24,6 +27,40 @@ export function ConductCreateForm({
   onSelectStudent,
   onSubmit,
 }: ConductCreateFormProps) {
+  const [isScoreDropdownOpen, setIsScoreDropdownOpen] = useState(false);
+  const scoreDropdownRef = useRef<HTMLDivElement>(null);
+  const scoreOptions = conductScoreOptions[form.conductCategory];
+  const selectedScoreOption = scoreOptions.find((option) => option.score === form.score);
+  const scorePrefix = form.conductCategory === 'PENALTY' ? '-' : '+';
+
+  useEffect(() => {
+    if (!isScoreDropdownOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!scoreDropdownRef.current?.contains(event.target as Node)) {
+        setIsScoreDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      window.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, [isScoreDropdownOpen]);
+
+  const handleCategoryChange = (category: typeof form.conductCategory) => {
+    onCategoryChange(category);
+    setIsScoreDropdownOpen(false);
+  };
+
+  const handleScoreSelect = (score: string) => {
+    onScoreChange(score);
+    setIsScoreDropdownOpen(false);
+  };
+
   return (
     <S.ConductForm onSubmit={onSubmit}>
       <S.StudentPickerPanel>
@@ -105,7 +142,7 @@ export function ConductCreateForm({
           </S.PreviousHistoryHeader>
 
           {!selectedStudent && (
-            <S.PreviousHistoryState>학생을 선택하면 이전 상벌점 이력이 표시됩니다.</S.PreviousHistoryState>
+            <S.PreviousHistoryState>학생 선택 후 이력이 표시됩니다.</S.PreviousHistoryState>
           )}
           {selectedStudent && isHistoryLoading && (
             <S.PreviousHistorySkeleton>
@@ -150,7 +187,7 @@ export function ConductCreateForm({
               type="button"
               $variant="reward"
               $isSelected={form.conductCategory === 'REWARD'}
-              onClick={() => onCategoryChange('REWARD')}
+              onClick={() => handleCategoryChange('REWARD')}
             >
               상점
             </S.CategoryButton>
@@ -158,7 +195,7 @@ export function ConductCreateForm({
               type="button"
               $variant="penalty"
               $isSelected={form.conductCategory === 'PENALTY'}
-              onClick={() => onCategoryChange('PENALTY')}
+              onClick={() => handleCategoryChange('PENALTY')}
             >
               벌점
             </S.CategoryButton>
@@ -167,14 +204,50 @@ export function ConductCreateForm({
 
         <S.FormField>
           <S.FormLabel htmlFor="conduct-score">점수</S.FormLabel>
-          <S.FormInput
-            id="conduct-score"
-            type="number"
-            min={1}
-            value={form.score}
-            placeholder="점수를 입력하세요"
-            onChange={(event) => onScoreChange(event.target.value)}
-          />
+          <S.ScoreDropdown ref={scoreDropdownRef}>
+            <S.ScoreDropdownButton
+              id="conduct-score"
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded={isScoreDropdownOpen}
+              onClick={() => setIsScoreDropdownOpen((isOpen) => !isOpen)}
+            >
+              {selectedScoreOption ? (
+                <S.ScoreDropdownValue>
+                  <strong>
+                    {scorePrefix}
+                    {selectedScoreOption.score}점
+                  </strong>
+                  <span>{selectedScoreOption.reason}</span>
+                </S.ScoreDropdownValue>
+              ) : (
+                <S.ScoreDropdownPlaceholder>점수와 사유를 선택하세요</S.ScoreDropdownPlaceholder>
+              )}
+              <S.ScoreDropdownArrow $isOpen={isScoreDropdownOpen} aria-hidden="true" />
+            </S.ScoreDropdownButton>
+
+            {isScoreDropdownOpen && (
+              <S.ScoreOptionList role="listbox" aria-labelledby="conduct-score">
+                {scoreOptions.map((option) => (
+                  <S.ScoreOptionButton
+                    key={`${form.conductCategory}-${option.score}`}
+                    type="button"
+                    role="option"
+                    aria-selected={form.score === option.score}
+                    $isSelected={form.score === option.score}
+                    $variant={form.conductCategory === 'PENALTY' ? 'penalty' : 'reward'}
+                    onClick={() => handleScoreSelect(option.score)}
+                  >
+                    <strong>
+                      {scorePrefix}
+                      {option.score}점
+                    </strong>
+                    <span>{option.reason}</span>
+                  </S.ScoreOptionButton>
+                ))}
+              </S.ScoreOptionList>
+            )}
+          </S.ScoreDropdown>
         </S.FormField>
 
         <S.FormActions>

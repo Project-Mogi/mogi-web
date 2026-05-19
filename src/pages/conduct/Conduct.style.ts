@@ -714,11 +714,13 @@ export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
   justify-content: center;
   gap: ${token.spacing.xs};
   border: 1px solid
-    ${({ $isEmpty, theme }) => ($isEmpty ? theme.colors.blueLine : theme.colors.blue)};
+    ${({ $isEmpty, theme }) => ($isEmpty ? theme.colors.blueLine : theme.colors.blueLineStrong)};
   border-radius: ${token.radius.sm};
   padding: ${token.spacing.md};
-  background: ${({ $isEmpty, theme }) => ($isEmpty ? theme.colors.white : theme.colors.blueTint)};
+  background: ${token.colors.white};
   color: ${token.colors.navy};
+  box-shadow: ${({ $isEmpty }) =>
+    $isEmpty ? 'none' : '0 8px 22px rgba(25, 33, 58, 0.05)'};
   ${token.typography('caption')}
 
   strong {
@@ -755,9 +757,10 @@ export const PreviousHistoryTitle = styled.h3`
 
 export const PreviousHistoryState = styled.p`
   margin: 0;
+  border: 1px solid ${token.colors.blueLine};
   border-radius: ${token.radius.sm};
   padding: ${token.spacing.md};
-  background: ${token.colors.blueTint};
+  background: ${token.colors.white};
   color: ${token.colors.navyMuted};
   ${token.typography('caption')}
   font-weight: 500;
@@ -840,8 +843,9 @@ export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
   }
 
   &:hover {
-    border-color: ${token.colors.blue};
-    background: ${token.colors.blueTint};
+    border-color: ${token.colors.blueLineStrong};
+    background: ${token.colors.white};
+    box-shadow: 0 8px 22px rgba(25, 33, 58, 0.04);
   }
 
   &:active {
@@ -852,7 +856,8 @@ export const StudentResultButton = styled.button<{ $isSelected?: boolean }>`
     $isSelected &&
     css`
       border-color: ${token.colors.blue};
-      background: ${token.colors.blueTint};
+      background: ${token.colors.white};
+      box-shadow: inset 3px 0 0 ${token.colors.blue};
     `}
 `;
 
@@ -883,9 +888,10 @@ export const StudentResultAside = styled.span`
 
 export const StudentSelectLabel = styled.span`
   min-width: 52px;
+  border: 1px solid ${token.colors.blueLine};
   border-radius: 999px;
   padding: 4px ${token.spacing.sm};
-  background: ${token.colors.blueTint};
+  background: ${token.colors.white};
   color: ${token.colors.blueHover};
   text-align: center;
   font-weight: 600;
@@ -917,6 +923,138 @@ export const FormInput = styled.input`
     border-color: ${token.colors.blue};
     box-shadow: 0 0 0 4px ${token.colors.blueTint};
   }
+`;
+
+export const ScoreDropdown = styled.div`
+  position: relative;
+`;
+
+export const ScoreDropdownButton = styled.button`
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${token.spacing.md};
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.white};
+  color: ${token.colors.navy};
+  cursor: pointer;
+  text-align: left;
+  ${token.typography('caption')}
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: ${token.colors.blue};
+    box-shadow: 0 0 0 4px ${token.colors.blueTint};
+    outline: none;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+`;
+
+export const ScoreDropdownValue = styled.span`
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: ${token.spacing.sm};
+
+  strong {
+    color: ${token.colors.navy};
+    font-weight: 600;
+  }
+
+  span {
+    min-width: 0;
+    overflow: hidden;
+    color: ${token.colors.navyMuted};
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
+export const ScoreDropdownPlaceholder = styled.span`
+  color: ${token.colors.gray};
+`;
+
+export const ScoreDropdownArrow = styled.span<{ $isOpen?: boolean }>`
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-right: 2px solid ${token.colors.navyMuted};
+  border-bottom: 2px solid ${token.colors.navyMuted};
+  transform: ${({ $isOpen }) =>
+    $isOpen ? 'translateY(2px) rotate(225deg)' : 'translateY(-2px) rotate(45deg)'};
+  transition: transform 0.15s ease;
+`;
+
+export const ScoreOptionList = styled.div`
+  position: absolute;
+  top: calc(100% + ${token.spacing.sm});
+  right: 0;
+  left: 0;
+  z-index: 20;
+  display: grid;
+  gap: ${token.spacing.xs};
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.sm};
+  background: ${token.colors.white};
+  box-shadow: 0 14px 36px rgba(25, 33, 58, 0.12);
+`;
+
+export const ScoreOptionButton = styled.button<{
+  $isSelected?: boolean;
+  $variant: 'penalty' | 'reward';
+}>`
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${token.spacing.md};
+  border: 0;
+  border-radius: ${token.radius.sm};
+  padding: 0 ${token.spacing.md};
+  background: ${token.colors.white};
+  color: ${token.colors.navy};
+  cursor: pointer;
+  text-align: left;
+  ${token.typography('caption')}
+
+  strong {
+    flex: 0 0 auto;
+    color: ${({ $variant, theme }) =>
+      $variant === 'penalty' ? theme.colors.pink : theme.colors.blueHover};
+    font-weight: 600;
+  }
+
+  span {
+    min-width: 0;
+    overflow: hidden;
+    color: ${token.colors.navyMuted};
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    background: ${token.colors.blueTint};
+  }
+
+  ${({ $isSelected, $variant }) =>
+    $isSelected &&
+    css`
+      background: ${$variant === 'penalty' ? token.colors.pinkTint : token.colors.blueTint};
+    `}
 `;
 
 export const CategoryGroup = styled.div`
