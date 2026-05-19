@@ -1,4 +1,4 @@
-import { type ComponentPropsWithoutRef } from 'react';
+import { type FormEventHandler } from 'react';
 
 import searchIcon from '@/assets/icons/iconamoon_search.svg';
 import { type ConductCategory, type ConductInfo } from '@/features/conduct/api';
@@ -18,7 +18,7 @@ interface ConductCreateModalProps {
   onScoreChange: (value: string) => void;
   onSearchChange: (value: string) => void;
   onSelectStudent: (userId: number) => void;
-  onSubmit: NonNullable<ComponentPropsWithoutRef<'form'>['onSubmit']>;
+  onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 export function ConductCreateModal({
