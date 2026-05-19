@@ -14,12 +14,7 @@ export function ConductCreatePage() {
       <Sidebar />
       <S.Page>
         <S.CreatePageHeader>
-          <S.CreatePageTitleGroup>
-            <S.CreatePageTitle>상벌점 부여</S.CreatePageTitle>
-          </S.CreatePageTitleGroup>
-          <S.SecondaryButton type="button" onClick={conductCreatePage.onCancel}>
-            목록으로
-          </S.SecondaryButton>
+          <S.CreatePageTitle>상벌점 부여</S.CreatePageTitle>
         </S.CreatePageHeader>
 
         <S.CreateFormPanel>
