@@ -4,7 +4,6 @@ import { Sidebar } from '@/components/sidebar';
 import * as S from './Conduct.style';
 import {
   ConductControls,
-  ConductCreateModal,
   ConductDetailModal,
   ConductFilters,
   ConductTable,
@@ -25,8 +24,6 @@ export function ConductPage() {
       </S.Page>
 
       {conductPage.detailModalProps && <ConductDetailModal {...conductPage.detailModalProps} />}
-
-      {conductPage.createModalProps && <ConductCreateModal {...conductPage.createModalProps} />}
     </>
   );
 }

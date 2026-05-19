@@ -1,11 +1,13 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useConductInfosQuery } from '@/features/conduct/queries';
 import { getApiErrorMessage } from '@/shared/api/types';
 
 import { useConductDetailModal } from './useConductDetailModal';
 import { useConductFilters, useConductTableRows } from './useConductFilters';
-import { useCreateConductModal } from './useCreateConductModal';
 
 export function useConductPage() {
+  const navigate = useNavigate();
   const filterState = useConductFilters();
   const conductListQuery = useConductInfosQuery(filterState.queryFilters);
   const conductInfos = conductListQuery.data ?? [];
@@ -15,13 +17,12 @@ export function useConductPage() {
     filterState.sortOption,
   );
   const detailModal = useConductDetailModal(conductInfos, filterState.selectedGender);
-  const createModal = useCreateConductModal(conductInfos);
 
   return {
     controlsProps: filterState.controlsProps,
     filtersProps: {
       ...filterState.filtersProps,
-      onCreateClick: () => createModal.openModal(detailModal.selectedUserId),
+      onCreateClick: () => navigate('/conduct/create'),
     },
     tableProps: {
       errorMessage: getApiErrorMessage(
@@ -36,6 +37,5 @@ export function useConductPage() {
       onSelectUser: detailModal.selectUser,
     },
     detailModalProps: detailModal.modalProps,
-    createModalProps: createModal.modalProps,
   };
 }

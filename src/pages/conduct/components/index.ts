@@ -1,5 +1,5 @@
 export { ConductControls } from './ConductControls';
-export { ConductCreateModal } from './ConductCreateModal';
+export { ConductCreateForm } from './ConductCreateForm';
 export { ConductDetailModal } from './ConductDetailModal';
 export { ConductFilters } from './ConductFilters';
 export { ConductTable } from './ConductTable';

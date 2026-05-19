@@ -17,6 +17,51 @@ export const Page = styled.main`
   }
 `;
 
+export const CreatePageHeader = styled.header`
+  display: flex;
+  max-width: 640px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ${token.spacing.md};
+  margin-bottom: ${token.spacing.lg};
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+export const CreatePageTitleGroup = styled.div`
+  ${token.flexColumn}
+  gap: ${token.spacing.xs};
+`;
+
+export const CreatePageTitle = styled.h1`
+  margin: 0;
+  color: ${token.colors.navy};
+  ${token.typography('heading')}
+`;
+
+export const CreatePageDescription = styled.p`
+  margin: 0;
+  color: ${token.colors.navyMuted};
+  ${token.typography('caption')}
+`;
+
+export const CreateFormPanel = styled.section`
+  width: min(640px, 100%);
+  box-sizing: border-box;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.lg};
+  background: ${token.colors.white};
+  box-shadow: 0 10px 28px rgba(25, 33, 58, 0.04);
+`;
+
+export const CreateFormSkeleton = styled.div`
+  ${token.flexColumn}
+  gap: ${token.spacing.md};
+`;
+
 export const ControlBar = styled.section`
   display: flex;
   align-items: center;
@@ -781,7 +826,7 @@ export const FormError = styled.p`
   font-weight: 700;
 `;
 
-export const ModalActions = styled.div`
+export const FormActions = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: ${token.spacing.sm};
