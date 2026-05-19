@@ -1,32 +1,16 @@
-import { type FormEventHandler } from 'react';
-
 import searchIcon from '@/assets/icons/iconamoon_search.svg';
-import { type ConductCategory, type ConductInfo } from '@/features/conduct/api';
 
 import * as S from '../Conduct.style';
-import { type CreateConductForm as CreateConductFormState } from '../types';
-
-interface ConductCreateFormProps {
-  errorMessage: string;
-  form: CreateConductFormState;
-  isPending: boolean;
-  searchKeyword: string;
-  searchResultCount: number;
-  searchResults: ConductInfo[];
-  selectedStudent?: ConductInfo;
-  totalStudentCount: number;
-  onCancel: () => void;
-  onCategoryChange: (category: ConductCategory) => void;
-  onClearSearch: () => void;
-  onScoreChange: (value: string) => void;
-  onSearchChange: (value: string) => void;
-  onSelectStudent: (userId: number) => void;
-  onSubmit: FormEventHandler<HTMLFormElement>;
-}
+import { type ConductCreateFormProps } from '../types';
 
 export function ConductCreateForm({
   errorMessage,
   form,
+  historyErrorMessage,
+  historyItems,
+  historySummary,
+  isHistoryError,
+  isHistoryLoading,
   isPending,
   searchKeyword,
   searchResultCount,
@@ -112,6 +96,53 @@ export function ConductCreateForm({
             </>
           )}
         </S.SelectedStudentCard>
+
+        <S.PreviousHistoryPanel>
+          <S.PreviousHistoryHeader>
+            <S.PreviousHistoryTitle>이전 이력</S.PreviousHistoryTitle>
+            {selectedStudent && (
+              <S.CreateSectionMeta>{historyItems.length}건</S.CreateSectionMeta>
+            )}
+          </S.PreviousHistoryHeader>
+
+          {!selectedStudent && (
+            <S.PreviousHistoryState>학생을 선택하면 이전 상벌점 이력이 표시됩니다.</S.PreviousHistoryState>
+          )}
+          {selectedStudent && isHistoryLoading && (
+            <S.PreviousHistorySkeleton>
+              <S.SkeletonBar $width="86%" />
+              <S.SkeletonBar $width="72%" />
+              <S.SkeletonBar $width="64%" />
+            </S.PreviousHistorySkeleton>
+          )}
+          {selectedStudent && isHistoryError && (
+            <S.PreviousHistoryState>{historyErrorMessage}</S.PreviousHistoryState>
+          )}
+          {selectedStudent && !isHistoryLoading && !isHistoryError && (
+            <>
+              {historySummary && (
+                <S.HistorySummaryGrid>
+                  <S.HistorySummaryItem $variant="reward">
+                    <span>상점</span>
+                    <strong>{historySummary.totalRewardPoint}</strong>
+                  </S.HistorySummaryItem>
+                  <S.HistorySummaryItem $variant="penalty">
+                    <span>벌점</span>
+                    <strong>{historySummary.totalPenaltyPoint}</strong>
+                  </S.HistorySummaryItem>
+                  <S.HistorySummaryItem $variant="total">
+                    <span>합계</span>
+                    <strong>{historySummary.totalPoint}</strong>
+                  </S.HistorySummaryItem>
+                </S.HistorySummaryGrid>
+              )}
+
+              {historyItems.length === 0 && (
+                <S.PreviousHistoryState>이전 상벌점 이력이 없습니다.</S.PreviousHistoryState>
+              )}
+            </>
+          )}
+        </S.PreviousHistoryPanel>
 
         <S.FormField>
           <S.FormLabel>구분</S.FormLabel>
