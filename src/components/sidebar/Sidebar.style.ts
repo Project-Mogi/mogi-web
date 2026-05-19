@@ -26,6 +26,14 @@ export const Menu = styled.nav`
   gap: ${token.spacing.sm};
 `;
 
+export const TemporaryMenuGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${token.spacing.sm};
+  margin-top: -${token.spacing.xs};
+  padding-left: ${token.spacing.md};
+`;
+
 export const MenuLink = styled(NavLink)`
   display: flex;
   min-height: 44px;
@@ -48,4 +56,9 @@ export const MenuLink = styled(NavLink)`
     background: ${token.colors.blueTint};
     color: ${token.colors.blue};
   }
+`;
+
+export const SubMenuLink = styled(MenuLink)`
+  min-height: 36px;
+  padding: 0 ${token.spacing.sm};
 `;
