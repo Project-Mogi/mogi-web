@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useConductInfosQuery } from '@/features/conduct/queries';
 import { getApiErrorMessage } from '@/shared/api/types';
 
-import { useConductDetailModal } from './useConductDetailModal';
 import { useConductFilters, useConductTableRows } from './useConductFilters';
 
 export function useConductPage() {
@@ -16,7 +15,6 @@ export function useConductPage() {
     filterState.searchKeyword,
     filterState.sortOption,
   );
-  const detailModal = useConductDetailModal(conductInfos, filterState.selectedGender);
 
   return {
     controlsProps: filterState.controlsProps,
@@ -33,9 +31,8 @@ export function useConductPage() {
       isLoading: conductListQuery.isLoading,
       rows: tableRows,
       selectedGender: filterState.selectedGender,
-      selectedUserId: detailModal.selectedUserId,
-      onSelectUser: detailModal.selectUser,
+      selectedUserId: null,
+      onSelectUser: (userId: number) => navigate(`/conduct/create?userId=${userId}`),
     },
-    detailModalProps: detailModal.modalProps,
   };
 }
