@@ -31,6 +31,9 @@ export function ConductCreateForm({
   const scoreOptions = conductScoreOptions[form.conductCategory];
   const selectedScoreOption = scoreOptions.find((option) => option.score === form.score);
   const scorePrefix = form.conductCategory === 'PENALTY' ? '-' : '+';
+  const selectedStudentNumberLabel = selectedStudent
+    ? formatStudentNumberLabel(selectedStudent.studentNumber)
+    : '';
 
   useEffect(() => {
     if (!isScoreDropdownOpen) {
@@ -119,10 +122,11 @@ export function ConductCreateForm({
         <S.SelectedStudentCard $isEmpty={!selectedStudent}>
           {selectedStudent ? (
             <>
-              <strong>{selectedStudent.userName}</strong>
-              <span>
-                {selectedStudent.studentNumber} · {selectedStudent.roomNumber}호
-              </span>
+              <S.SelectedStudentNameRow>
+                <strong>{selectedStudent.userName}</strong>
+                <span>{selectedStudentNumberLabel}</span>
+              </S.SelectedStudentNameRow>
+              <span>{selectedStudent.roomNumber}호</span>
             </>
           ) : (
             <>
@@ -242,4 +246,13 @@ export function ConductCreateForm({
       </S.ConductAssignPanel>
     </S.ConductForm>
   );
+}
+
+function formatStudentNumberLabel(studentNumber: number) {
+  const value = String(studentNumber).padStart(4, '0');
+  const grade = Number(value.slice(0, 1));
+  const classNumber = Number(value.slice(1, 2));
+  const number = Number(value.slice(2));
+
+  return `${grade}학년 ${classNumber}반 ${number}번`;
 }

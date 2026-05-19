@@ -732,6 +732,19 @@ export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
   }
 `;
 
+export const SelectedStudentNameRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: ${token.spacing.sm};
+
+  span {
+    color: ${token.colors.gray};
+    ${token.typography('caption')}
+    font-weight: 400;
+  }
+`;
+
 export const PreviousHistoryPanel = styled.section`
   ${token.flexColumn}
   gap: ${token.spacing.sm};
