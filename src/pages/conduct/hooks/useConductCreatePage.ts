@@ -133,7 +133,6 @@ export function useConductCreatePage() {
         selectedStudentDetailQuery.error,
         '상벌점 이력 조회 실패',
       ),
-      historyItems: selectedStudentDetailQuery.data?.conductDetailedInfo ?? [],
       historySummary: selectedStudentDetailQuery.data
         ? {
             totalPenaltyPoint: selectedStudentDetailQuery.data.totalPenaltyPoint,
