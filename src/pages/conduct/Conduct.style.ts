@@ -709,18 +709,16 @@ export const SearchClearButton = styled.button`
 
 export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
   display: flex;
-  min-height: 84px;
   flex-direction: column;
   justify-content: center;
   gap: ${token.spacing.xs};
-  border: 1px solid
-    ${({ $isEmpty, theme }) => ($isEmpty ? theme.colors.blueLine : theme.colors.blueLineStrong)};
-  border-radius: ${token.radius.sm};
-  padding: ${token.spacing.md};
+  min-height: ${({ $isEmpty }) => ($isEmpty ? '72px' : '56px')};
+  border: 0;
+  border-radius: 0;
+  padding: ${token.spacing.sm} 0;
   background: ${token.colors.white};
   color: ${token.colors.navy};
-  box-shadow: ${({ $isEmpty }) =>
-    $isEmpty ? 'none' : '0 8px 22px rgba(25, 33, 58, 0.05)'};
+  box-shadow: none;
   ${token.typography('caption')}
 
   strong {
@@ -736,23 +734,9 @@ export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
 
 export const PreviousHistoryPanel = styled.section`
   ${token.flexColumn}
-  gap: ${token.spacing.md};
-  border-top: 1px solid ${token.colors.blueLine};
-  padding-top: ${token.spacing.md};
-`;
-
-export const PreviousHistoryHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: ${token.spacing.sm};
-`;
-
-export const PreviousHistoryTitle = styled.h3`
-  margin: 0;
-  color: ${token.colors.navy};
-  ${token.typography('caption')}
-  font-weight: 600;
+  border-top: 1px solid ${token.colors.blueLine};
+  padding-top: ${token.spacing.lg};
 `;
 
 export const PreviousHistoryState = styled.p`

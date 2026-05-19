@@ -9,7 +9,6 @@ import { type ConductCreateFormProps } from '../types';
 export function ConductCreateForm({
   form,
   historyErrorMessage,
-  historyItems,
   historySummary,
   isHistoryError,
   isHistoryLoading,
@@ -133,52 +132,34 @@ export function ConductCreateForm({
           )}
         </S.SelectedStudentCard>
 
-        <S.PreviousHistoryPanel>
-          <S.PreviousHistoryHeader>
-            <S.PreviousHistoryTitle>이전 이력</S.PreviousHistoryTitle>
-            {selectedStudent && (
-              <S.CreateSectionMeta>{historyItems.length}건</S.CreateSectionMeta>
+        {selectedStudent && (
+          <S.PreviousHistoryPanel>
+            {isHistoryLoading && (
+              <S.PreviousHistorySkeleton>
+                <S.SkeletonBar $width="86%" />
+                <S.SkeletonBar $width="72%" />
+                <S.SkeletonBar $width="64%" />
+              </S.PreviousHistorySkeleton>
             )}
-          </S.PreviousHistoryHeader>
-
-          {!selectedStudent && (
-            <S.PreviousHistoryState>학생 선택 후 이력이 표시됩니다.</S.PreviousHistoryState>
-          )}
-          {selectedStudent && isHistoryLoading && (
-            <S.PreviousHistorySkeleton>
-              <S.SkeletonBar $width="86%" />
-              <S.SkeletonBar $width="72%" />
-              <S.SkeletonBar $width="64%" />
-            </S.PreviousHistorySkeleton>
-          )}
-          {selectedStudent && isHistoryError && (
-            <S.PreviousHistoryState>{historyErrorMessage}</S.PreviousHistoryState>
-          )}
-          {selectedStudent && !isHistoryLoading && !isHistoryError && (
-            <>
-              {historySummary && (
-                <S.HistorySummaryGrid>
-                  <S.HistorySummaryItem $variant="reward">
-                    <span>상점</span>
-                    <strong>{historySummary.totalRewardPoint}</strong>
-                  </S.HistorySummaryItem>
-                  <S.HistorySummaryItem $variant="penalty">
-                    <span>벌점</span>
-                    <strong>{historySummary.totalPenaltyPoint}</strong>
-                  </S.HistorySummaryItem>
-                  <S.HistorySummaryItem $variant="total">
-                    <span>합계</span>
-                    <strong>{historySummary.totalPoint}</strong>
-                  </S.HistorySummaryItem>
-                </S.HistorySummaryGrid>
-              )}
-
-              {historyItems.length === 0 && (
-                <S.PreviousHistoryState>이전 상벌점 이력이 없습니다.</S.PreviousHistoryState>
-              )}
-            </>
-          )}
-        </S.PreviousHistoryPanel>
+            {isHistoryError && <S.PreviousHistoryState>{historyErrorMessage}</S.PreviousHistoryState>}
+            {!isHistoryLoading && !isHistoryError && historySummary && (
+              <S.HistorySummaryGrid>
+                <S.HistorySummaryItem $variant="reward">
+                  <span>상점</span>
+                  <strong>{historySummary.totalRewardPoint}</strong>
+                </S.HistorySummaryItem>
+                <S.HistorySummaryItem $variant="penalty">
+                  <span>벌점</span>
+                  <strong>{historySummary.totalPenaltyPoint}</strong>
+                </S.HistorySummaryItem>
+                <S.HistorySummaryItem $variant="total">
+                  <span>합계</span>
+                  <strong>{historySummary.totalPoint}</strong>
+                </S.HistorySummaryItem>
+              </S.HistorySummaryGrid>
+            )}
+          </S.PreviousHistoryPanel>
+        )}
 
         <S.FormField>
           <S.FormLabel>구분</S.FormLabel>
