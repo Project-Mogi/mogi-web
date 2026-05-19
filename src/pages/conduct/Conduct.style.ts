@@ -18,21 +18,8 @@ export const Page = styled.main`
 `;
 
 export const CreatePageHeader = styled.header`
-  display: flex;
-  max-width: 1180px;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: ${token.spacing.md};
+  width: min(1180px, 100%);
   margin-bottom: ${token.spacing.lg};
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-export const CreatePageTitleGroup = styled.div`
-  ${token.flexColumn}
-  gap: ${token.spacing.xs};
 `;
 
 export const CreatePageTitle = styled.h1`
@@ -603,6 +590,7 @@ export const EmptyText = styled.p`
 
 export const ConductForm = styled.form`
   display: grid;
+  align-items: start;
   grid-template-columns: minmax(0, 1fr) 320px;
   gap: ${token.spacing.lg};
 
@@ -614,6 +602,7 @@ export const ConductForm = styled.form`
 export const StudentPickerPanel = styled.section`
   ${token.flexColumn}
   min-width: 0;
+  align-self: start;
   gap: ${token.spacing.md};
   border: 1px solid ${token.colors.blueLine};
   border-radius: ${token.radius.sm};
@@ -739,6 +728,82 @@ export const SelectedStudentCard = styled.div<{ $isEmpty?: boolean }>`
   span {
     color: ${token.colors.navyMuted};
     font-weight: 700;
+  }
+`;
+
+export const PreviousHistoryPanel = styled.section`
+  ${token.flexColumn}
+  gap: ${token.spacing.md};
+  border-top: 1px solid ${token.colors.blueLine};
+  padding-top: ${token.spacing.md};
+`;
+
+export const PreviousHistoryHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${token.spacing.sm};
+`;
+
+export const PreviousHistoryTitle = styled.h3`
+  margin: 0;
+  color: ${token.colors.navy};
+  ${token.typography('caption')}
+  font-weight: 800;
+`;
+
+export const PreviousHistoryState = styled.p`
+  margin: 0;
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.md};
+  background: ${token.colors.blueTint};
+  color: ${token.colors.navyMuted};
+  ${token.typography('caption')}
+  font-weight: 700;
+`;
+
+export const PreviousHistorySkeleton = styled.div`
+  ${token.flexColumn}
+  gap: ${token.spacing.sm};
+`;
+
+export const HistorySummaryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: ${token.spacing.sm};
+`;
+
+export const HistorySummaryItem = styled.div<{ $variant: 'penalty' | 'reward' | 'total' }>`
+  ${token.flexColumn}
+  gap: 2px;
+  min-height: 52px;
+  justify-content: center;
+  border: 1px solid ${token.colors.blueLine};
+  border-radius: ${token.radius.sm};
+  padding: ${token.spacing.sm};
+  background: ${token.colors.white};
+  text-align: center;
+
+  span {
+    color: ${token.colors.navyMuted};
+    ${token.typography('caption')}
+    font-weight: 700;
+  }
+
+  strong {
+    color: ${({ $variant, theme }) => {
+      if ($variant === 'reward') {
+        return theme.colors.blueHover;
+      }
+
+      if ($variant === 'penalty') {
+        return theme.colors.pink;
+      }
+
+      return theme.colors.navy;
+    }};
+    ${token.typography('caption')}
+    font-weight: 900;
   }
 `;
 
