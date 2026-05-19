@@ -2,7 +2,11 @@ import { type FormEventHandler, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { type ConductCategory } from '@/features/conduct/api';
-import { useConductInfosQuery, useCreateConductMutation } from '@/features/conduct/queries';
+import {
+  useConductDetailQuery,
+  useConductInfosQuery,
+  useCreateConductMutation,
+} from '@/features/conduct/queries';
 import { getApiErrorMessage } from '@/shared/api/types';
 
 import { initialCreateConductForm } from '../constants';
@@ -20,8 +24,13 @@ export function useConductCreatePage() {
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [studentKeyword, setStudentKeyword] = useState('');
+  const [isDefaultStudentSearchActive, setIsDefaultStudentSearchActive] = useState(Boolean(defaultUserId));
 
   const selectedStudent = conductInfos.find((student) => student.userId === Number(form.userId));
+  const selectedUserId = Number(form.userId) || null;
+  const selectedStudentDetailQuery = useConductDetailQuery(selectedUserId);
+  const activeStudentKeyword =
+    isDefaultStudentSearchActive && selectedStudent ? selectedStudent.userName : studentKeyword;
   const sortedStudents = useMemo(
     () =>
       [...conductInfos].sort(
@@ -33,7 +42,7 @@ export function useConductCreatePage() {
     [conductInfos],
   );
   const filteredStudents = useMemo(() => {
-    const keyword = studentKeyword.trim();
+    const keyword = activeStudentKeyword.trim();
 
     if (!keyword) {
       return sortedStudents;
@@ -44,7 +53,7 @@ export function useConductCreatePage() {
         value.includes(keyword),
       ),
     );
-  }, [sortedStudents, studentKeyword]);
+  }, [activeStudentKeyword, sortedStudents]);
   const studentResults = filteredStudents;
 
   const createConductMutation = useCreateConductMutation({
@@ -63,6 +72,7 @@ export function useConductCreatePage() {
 
   function selectStudent(userId: number) {
     updateForm('userId', String(userId));
+    setIsDefaultStudentSearchActive(false);
     setErrorMessage('');
   }
 
@@ -75,7 +85,13 @@ export function useConductCreatePage() {
   }
 
   function clearSearchKeyword() {
+    setIsDefaultStudentSearchActive(false);
     setStudentKeyword('');
+  }
+
+  function updateStudentKeyword(keyword: string) {
+    setIsDefaultStudentSearchActive(false);
+    setStudentKeyword(keyword);
   }
 
   function goBackToList() {
@@ -112,8 +128,22 @@ export function useConductCreatePage() {
     formProps: {
       errorMessage,
       form,
+      historyErrorMessage: getApiErrorMessage(
+        selectedStudentDetailQuery.error,
+        '상벌점 이력을 불러오지 못했습니다',
+      ),
+      historyItems: selectedStudentDetailQuery.data?.conductDetailedInfo ?? [],
+      historySummary: selectedStudentDetailQuery.data
+        ? {
+            totalPenaltyPoint: selectedStudentDetailQuery.data.totalPenaltyPoint,
+            totalPoint: selectedStudentDetailQuery.data.totalPoint,
+            totalRewardPoint: selectedStudentDetailQuery.data.totalRewardPoint,
+          }
+        : undefined,
+      isHistoryError: selectedStudentDetailQuery.isError,
+      isHistoryLoading: Boolean(selectedUserId) && selectedStudentDetailQuery.isLoading,
       isPending: createConductMutation.isPending,
-      searchKeyword: studentKeyword,
+      searchKeyword: activeStudentKeyword,
       searchResultCount: filteredStudents.length,
       searchResults: studentResults,
       selectedStudent,
@@ -122,7 +152,7 @@ export function useConductCreatePage() {
       onCategoryChange: updateCategory,
       onClearSearch: clearSearchKeyword,
       onScoreChange: updateScore,
-      onSearchChange: setStudentKeyword,
+      onSearchChange: updateStudentKeyword,
       onSelectStudent: selectStudent,
       onSubmit: handleSubmit,
     },
