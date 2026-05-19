@@ -859,7 +859,10 @@ export const CategoryGroup = styled.div`
   gap: ${token.spacing.sm};
 `;
 
-export const CategoryButton = styled.button<{ $isSelected?: boolean }>`
+export const CategoryButton = styled.button<{
+  $isSelected?: boolean;
+  $variant?: 'penalty' | 'reward';
+}>`
   min-height: 42px;
   border: 1px solid ${token.colors.blueLine};
   border-radius: ${token.radius.sm};
@@ -883,6 +886,15 @@ export const CategoryButton = styled.button<{ $isSelected?: boolean }>`
     css`
       border-color: ${token.colors.blue};
       background: ${token.colors.blue};
+      color: ${token.colors.white};
+    `}
+
+  ${({ $isSelected, $variant }) =>
+    $isSelected &&
+    $variant === 'penalty' &&
+    css`
+      border-color: ${token.colors.pink};
+      background: ${token.colors.pink};
       color: ${token.colors.white};
     `}
 `;

@@ -116,18 +116,20 @@ export function ConductCreateForm({
         <S.FormField>
           <S.FormLabel>구분</S.FormLabel>
           <S.CategoryGroup>
-            <S.CategoryButton
-              type="button"
-              $isSelected={form.conductCategory === 'REWARD'}
-              onClick={() => onCategoryChange('REWARD')}
-            >
-              상점
-            </S.CategoryButton>
-            <S.CategoryButton
-              type="button"
-              $isSelected={form.conductCategory === 'PENALTY'}
-              onClick={() => onCategoryChange('PENALTY')}
-            >
+          <S.CategoryButton
+            type="button"
+            $variant="reward"
+            $isSelected={form.conductCategory === 'REWARD'}
+            onClick={() => onCategoryChange('REWARD')}
+          >
+            상점
+          </S.CategoryButton>
+          <S.CategoryButton
+            type="button"
+            $variant="penalty"
+            $isSelected={form.conductCategory === 'PENALTY'}
+            onClick={() => onCategoryChange('PENALTY')}
+          >
               벌점
             </S.CategoryButton>
           </S.CategoryGroup>
